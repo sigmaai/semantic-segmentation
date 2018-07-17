@@ -13,6 +13,7 @@ import configs
 import matplotlib.pyplot as plt
 import time
 
+# image path that you are testing
 path = ["./testing_imgs/dirt-road.JPG",
         "./testing_imgs/side-walk.JPG"]
 

@@ -15,9 +15,15 @@ To run inference on the pre-trained models, please use `segmentor.py`.
 
 `cls_output` is the pixel-wise classification result for all the categories. `img_viz` is a RGB image generated based on `cls_output`
 
+The best way to run some actual test is using `test.py`. You must specify the image path by changing the `path` variable. 
+
+The pre-trained weights are stored in the `./weights` directory.
+
 ## Training
 
-`train.py` is the training script. `utils.py` contains all the categories (classes). You can modify them based on your dataset.
+`train.py` is the training script. `utils.py` contains all the categories (classes). You can modify them based on your dataset. 
+
+*training doesn't work very well.* I trying to fix the issue. 
 
 ## Models
 
