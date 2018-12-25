@@ -42,6 +42,6 @@ def build(nc, h, w, loss='categorical_crossentropy', optimizer='adam'):
     # enet = Convolution2D(3, (1, 1), activation='sigmoid')(enet)
     model = Model(inputs=inp, outputs=enet)
 
-    model.compile(optimizer=optimizer, loss=loss, metrics=['accuracy', 'mean_squared_error'])
+    model.compile(optimizer=optimizer, loss=IOU_calc_loss, metrics=['accuracy', 'mean_squared_error'])
 
     return model

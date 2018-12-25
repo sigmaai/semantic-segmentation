@@ -5,13 +5,10 @@
 # ==============================================================================
 #
 
-import re
 import cv2
 import configs as configs
 import numpy as np
 import os
-import scipy.misc
-from glob import glob
 from collections import namedtuple
 
 Label = namedtuple('Label', [
@@ -31,22 +28,21 @@ Label = namedtuple('Label', [
 
 
 labels = [
-    #       name            id      color
-    Label('None',         1,     (0, 0, 0)      ),
-    Label('Buildings',    6,     (70, 70, 70)   ),
-    Label('Fences',       7,     (190, 153, 153)),
-    Label('Other',        8,     (0, 0, 0)      ),
-    Label('Pedestrians',  11,    (220, 20, 60)  ),
-    Label('Poles',        20,    (153, 153, 153)),
-    Label('RoadLines',    21,    (128, 64,128)  ),
-    Label('Roads',        22,    (128, 64,128)  ),
-    Label('Sidewalks',    23,    (70, 130, 180) ),
-    Label('Vegetation',   24,    (220, 20, 60)  ),
-    Label('Vehicles',     26,    (0, 0, 142)    ),
-    Label('Walls',        27,    (0, 0, 70)     ),
-    Label('TrafficSigns', 33,    (119, 11, 32)  ),
+    #       name                     id    trainId   category            catId     hasInstances   ignoreInEval   color
+    Label(  'unlabeled'            ,  0 ,       (  0,  0,  0) ),
+    Label(  'ground'               ,  6 ,       ( 81,  0, 81) ),
+    Label(  'road'                 ,  7 ,       (128, 64,128) ),
+    Label(  'sidewalk'             ,  8 ,       (244, 35,232) ),
+    Label(  'building'             , 11 ,       ( 70, 70, 70) ),
+    Label(  'pole'                 , 17 ,       (153,153,153) ),
+    Label(  'vegetation'           , 21 ,       (107,142, 35) ),
+    Label(  'terrain'              , 22 ,       (152,251,152) ),
+    Label(  'sky'                  , 23 ,       ( 70,130,180) ),
+    Label(  'person'               , 24 ,       (220, 20, 60) ),
+    Label(  'car'                  , 26 ,       (  0,  0,142) ),
+    Label(  'motorcycle'           , 32 ,       (  0,  0,230) ),
+    Label(  'bicycle'              , 33 ,       (119, 11, 32) ),
 ]
-
 
 def bc_img(img, s = 1.0, m = 0.0):
     img = img.astype(np.int)
@@ -73,6 +69,7 @@ def load_image(path):
     img = cv2.imread(path)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     img = cv2.resize(img, (configs.img_width, configs.img_height))
+
     return img
 
 
@@ -83,8 +80,7 @@ def convert_rgb_to_class(image):
     for i in range(len(labels)):
 
         label = labels[i]
-
-        color = np.array(label[7], dtype=np.uint8)
+        color = np.array(label[2], dtype=np.uint8)
         # objects found in the frame.
         mask = cv2.inRange(image, color, color)
 
@@ -109,25 +105,25 @@ def convert_class_to_rgb(image_labels, threshold=0.05):
 
     for i in range(len(labels)):
 
-        if i != 44:
-            split = image_labels[:, :, i]
-            split[split > threshold] = 1
-            split[split < threshold] = 0
-            split[:] *= 255
-            split = split.astype(np.uint8)
-            color = labels[i][7]
+        split = image_labels[:, :, i]
+        split[split > threshold] = 1
+        split[split < threshold] = 0
+        split[:] *= 255
+        split = split.astype(np.uint8)
+        color = labels[i][7]
 
-            bg = np.zeros((configs.img_height, configs.img_width, 3), dtype=np.uint8)
-            bg[:, :, 0].fill(color[0])
-            bg[:, :, 1].fill(color[1])
-            bg[:, :, 2].fill(color[2])
+        bg = np.zeros((configs.img_height, configs.img_width, 3), dtype=np.uint8)
+        bg[:, :, 0].fill(color[0])
+        bg[:, :, 1].fill(color[1])
+        bg[:, :, 2].fill(color[2])
 
-            res = cv2.bitwise_and(bg, bg, mask=split)
+        res = cv2.bitwise_and(bg, bg, mask=split)
 
-            # plt.imshow(np.hstack([bg, res]))
-            # plt.show()
+        # plt.imshow(np.hstack([bg, res]))
+        # plt.show()
 
-            output = cv2.addWeighted(output, 1.0, res, 1.0, 0)
+        output = cv2.addWeighted(output, 1.0, res, 1.0, 0)
+
 
     return output
 
@@ -151,28 +147,42 @@ def validation_generator(labels, batch_size):
         yield batch_images, batch_masks
 
 
+def train_generator(df, batch_size):
 
-def train_generator(ls, batch_size):
+    """
+    An important method that returns the generator used
+    for training the segmentation network
+
+    :param df: data frame, the loaded csv data
+    :param batch_size: training batch size
+    :return: training generator
+    """
 
     batch_images = np.zeros((batch_size, configs.img_height, configs.img_width, 3))
     batch_masks = np.zeros((batch_size, configs.img_height, configs.img_width, len(labels)))
 
     while 1:
         i = 0
-        for index in np.random.permutation(len(ls)):
+        for index in np.random.permutation(len(df)):
 
-            label = ls[index]
-            image = load_image(configs.data_path + label[0])
-            gt_image = load_image(configs.data_path + label[1])
+            label = df[index]
 
+            image = np.array(load_image(label[0]), dtype=np.float32) / 255
+            gt_image = load_image(label[1])
             batch_images[i] = image
             batch_masks[i] = convert_rgb_to_class(gt_image)
+
             i += 1
             if i == batch_size:
                 break
 
         yield batch_images, batch_masks
 
+
+"""
+The main method is used 
+for testing the helper methods
+"""
 
 if __name__ == "__main__":
 
