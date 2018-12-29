@@ -9,6 +9,7 @@ import cv2
 import configs as configs
 import numpy as np
 import os
+import matplotlib.pyplot as plt
 from collections import namedtuple
 
 Label = namedtuple('Label', [
@@ -95,7 +96,7 @@ def convert_rgb_to_class(image):
     return outputs
 
 
-def convert_class_to_rgb(image_labels, threshold=0.05):
+def convert_class_to_rgb(image_labels, threshold=0.25):
 
     # convert any pixel > threshold to 1
     # convert any pixel < threshold to 0
@@ -110,7 +111,7 @@ def convert_class_to_rgb(image_labels, threshold=0.05):
         split[split < threshold] = 0
         split[:] *= 255
         split = split.astype(np.uint8)
-        color = labels[i][7]
+        color = labels[i][2]
 
         bg = np.zeros((configs.img_height, configs.img_width, 3), dtype=np.uint8)
         bg[:, :, 0].fill(color[0])
@@ -123,7 +124,6 @@ def convert_class_to_rgb(image_labels, threshold=0.05):
         # plt.show()
 
         output = cv2.addWeighted(output, 1.0, res, 1.0, 0)
-
 
     return output
 
@@ -167,7 +167,7 @@ def train_generator(df, batch_size):
 
             label = df[index]
 
-            image = np.array(load_image(label[0]), dtype=np.float32) / 255
+            image = np.array(load_image(label[0]), dtype=np.uint8) #  / 255
             gt_image = load_image(label[1])
             batch_images[i] = image
             batch_masks[i] = convert_rgb_to_class(gt_image)

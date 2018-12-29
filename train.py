@@ -63,7 +63,25 @@ if __name__ == "__main__":
 
     df = load_data()
 
-    train_generator = utils.train_generator(df, 4)
+    train_generator = utils.train_generator(df, 2)
 
-    model.load_weights("./enet_v3.h5")
-    train(model, epochs=5, train_gen=train_generator, steps_epch=200, save_path="./enet_v4")
+    # Plotting generator output
+    images, targets = next(train_generator)
+
+    for i in range(len(images)):
+        im_gt = np.array(targets[i])
+        im_prediction = model.predict(np.array([images[i]]))[0]
+        print im_prediction.shape
+        print im_prediction[:, :, 0]
+        plt.subplot(1, 3, 1)
+        plt.imshow(np.array(images[i]))
+        plt.subplot(1, 3, 2)
+        plt.imshow(utils.convert_class_to_rgb(im_gt))
+        plt.subplot(1, 3, 3)
+        plt.imshow(utils.convert_class_to_rgb(im_prediction))
+        plt.show()
+
+    exit(0)
+
+    # model.load_weights("./enet_v7.h5")
+    train(model, epochs=3, train_gen=train_generator, steps_epch=1000, save_path="./enet2-1")
