@@ -87,12 +87,11 @@ def convert_class_to_rgb(image_labels, threshold=0.25):
         split[split < threshold] = 0
         split[:] *= 255
         split = split.astype(np.uint8)
-        color = labels[i][7]
 
         bg = np.zeros((configs.img_height, configs.img_width, 3), dtype=np.uint8)
-        bg[:, :, 0].fill(color[0])
-        bg[:, :, 1].fill(color[1])
-        bg[:, :, 2].fill(color[2])
+        bg[:, :, 0].fill(labels[i][2][0])
+        bg[:, :, 1].fill(labels[i][2][1])
+        bg[:, :, 2].fill(labels[i][2][2])
 
         res = cv2.bitwise_and(bg, bg, mask=split)
 
@@ -102,8 +101,8 @@ def convert_class_to_rgb(image_labels, threshold=0.25):
     return output
 
 # The new training generator
-def train_generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, horizontal_flip=False,
-                    vertical_flip=False, brightness=0.1, rotation=0.0, zoom=0.0, augmentation=True):
+def generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, horizontal_flip=False,
+                    vertical_flip=False, brightness=0.1, rotation=0.0, zoom=0.0, training=True):
 
     X = np.zeros((batch_size, crop_shape[1], crop_shape[0], 3), dtype='float32')
     Y1 = np.zeros((batch_size, crop_shape[1] // 4, crop_shape[0] // 4, len(labels)), dtype='float32')
@@ -118,34 +117,43 @@ def train_generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=Non
             image_path = df[index][0]
             label_path = df[index][1]
             image = cv2.imread(image_path, 1)
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             label = cv2.imread(label_path, 0)
+
+            # TODO: fix this stupid patch.
+            # must rotate label...
+            label = cv2.rotate(label, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
             if resize_shape:
                 image = cv2.resize(image, resize_shape)
                 label = cv2.resize(label, resize_shape)
 
             # Do augmentation (only if training)
-            if augmentation:
+            if training:
                 if horizontal_flip and random.randint(0, 1):
                     image = cv2.flip(image, 1)
                     label = cv2.flip(label, 1)
                 if vertical_flip and random.randint(0, 1):
                     image = cv2.flip(image, 0)
                     label = cv2.flip(label, 0)
-                if brightness:
+                if brightness and random.randint(0, 1):
                     factor = 1.0 + abs(random.gauss(mu=0.0, sigma=brightness))
                     if random.randint(0, 1):
                         factor = 1.0 / factor
                     table = np.array([((i / 255.0) ** factor) * 255 for i in np.arange(0, 256)]).astype(np.uint8)
                     image = cv2.LUT(image, table)
-                if rotation:
+
+                # get rotation or zoom
+                if rotation and random.randint(0, 1):
                     angle = random.gauss(mu=0.0, sigma=rotation)
                 else:
                     angle = 0.0
-                if zoom:
+                if zoom and random.randint(0, 1):
                     scale = random.gauss(mu=1.0, sigma=zoom)
                 else:
                     scale = 1.0
+
+                # perform rotation or zoom
                 if rotation or zoom:
                     M = cv2.getRotationMatrix2D((image.shape[1] // 2, image.shape[0] // 2), angle, scale)
                     image = cv2.warpAffine(image, M, (image.shape[1], image.shape[0]))
@@ -154,44 +162,51 @@ def train_generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=Non
                     image, label = _random_crop(image, label, crop_shape)
 
             X[j] = image
+
             # only keep the useful classes
             y1 = _filter_labels(to_categorical(cv2.resize(label, (label.shape[1] // 4, label.shape[0] // 4)), n_classes)).transpose()
             y2 = _filter_labels(to_categorical(cv2.resize(label, (label.shape[1] // 8, label.shape[0] // 8)), n_classes)).transpose()
             y3 = _filter_labels(to_categorical(cv2.resize(label, (label.shape[1] // 16, label.shape[0] // 16)), n_classes)).transpose()
 
-            Y1[j] = y1.reshape((label.shape[0] // 4, label.shape[1] // 4, -1))
-            Y2[j] = y2.reshape((label.shape[0] // 8, label.shape[1] // 8, -1))
-            Y3[j] = y3.reshape((label.shape[0] // 16, label.shape[1] // 16, -1))
+            Y1[j] = y1
+            Y2[j] = y2
+            Y3[j] = y3
 
             j += 1
             if j == batch_size:
                 break
 
-        yield X, [Y1, Y2, Y3]
+        yield X, Y1
+        # yield X, [Y1, Y2, Y3]
 
 ##############################################################
-#################City Scape Generator#########################
+################ City Scape Generator ########################
+##############################################################
 
 # * Not working currently
 
 class CityScapeGenerator(Sequence):
 
-    def __init__(self, csv_path, mode='training', n_classes=66, batch_size=1, resize_shape=None, crop_shape=(640, 320),
+    def __init__(self, csv_path, mode='training', n_classes=34, batch_size=1, resize_shape=None, crop_shape=(640, 320),
                  horizontal_flip=False, vertical_flip=False, brightness=0.1, rotation=0.0, zoom=0.0):
 
         """
+        Init method for the CityScape dataset generator. This can be used for
+        Any type of Keras models (Not tested). Currently under development
+        for ICNet architecture.
 
-        :param csv_path:    the path of the csv file which contains paths to labels
-        :param mode:
-        :param n_classes:
-        :param batch_size:
-        :param resize_shape:
-        :param crop_shape:
-        :param horizontal_flip:
-        :param vertical_flip:
-        :param brightness:
-        :param rotation:
-        :param zoom:
+        :param csv_path: the path of the csv file which contains paths to labels
+        :param mode: mode of the generator
+        :param n_classes: number of classes in segmentation. CityScape default 34
+        :param batch_size: generator batch size
+        :param resize_shape: you can either resize the img or crop
+        :param crop_shape: you can either resize the img or crop. cropping is random
+        :param horizontal_flip: whether or not to perform hori flip
+        :param vertical_flip: whether or not to perform vert flip
+        :param brightness: for data augmentation. If != 0, adjust brightness of image.
+        :param rotation: For data augmentation. If != 0, rotate input image.
+        :param zoom: For data augmentation. If != 0, zooms in.
+
         """
         self.image_path_list, self.label_path_list = _load_data(csv_path)
 

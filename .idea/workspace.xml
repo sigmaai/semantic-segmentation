@@ -2,22 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f2ac002-8e16-4061-9255-f22003626f8d" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/train_v2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test_v2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data Preprocessing.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Data Preprocessing.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/enet_v1/2018-12-25 11:11:38.154500/events.out.tfevents.1545754316.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/enet_v2/2018-12-25 11:26:05.518711/events.out.tfevents.1545755181.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/enet_v3/2018-12-25 13:14:59.898355/events.out.tfevents.1545761716.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/enet_v4/2018-12-25 14:53:08.792419/events.out.tfevents.1545767605.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/enet_v4/2018-12-25 17:32:51.094477/events.out.tfevents.1545777187.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/enet_v5/2018-12-25 18:40:26.374973/events.out.tfevents.1545781242.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/enet_v6/2018-12-25 19:35:21.825461/events.out.tfevents.1545784537.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/enet_v7/2018-12-25 20:02:28.904008/events.out.tfevents.1545786165.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/enet_v7/2018-12-25 20:03:39.091831/events.out.tfevents.1545786234.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/icnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/icnet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ICNet/2019-01-02-00-16-21/events.out.tfevents.1546388194.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testing_imgs/da-1.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testing_imgs/da-3.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testing_imgs/dirt-road.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testing_imgs/start-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testing_imgs/stop-2.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testing_imgs/stop3.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testing_imgs/test_3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testing_imgs/test_5.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_v2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/train_v2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="83">
-              <caret line="33" column="38" selection-start-line="33" selection-start-column="38" selection-end-line="33" selection-end-column="38" />
+            <state relative-caret-position="195">
+              <caret line="42" selection-start-line="42" selection-start-column="2" selection-end-line="50" selection-end-column="12" />
               <folding>
                 <element signature="e#19#52#0" expanded="true" />
               </folding>
@@ -40,11 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+            <state relative-caret-position="240">
+              <caret line="176" column="21" lean-forward="true" selection-start-line="176" selection-start-column="21" selection-end-line="176" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -52,22 +48,30 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/icnet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="42" selection-start-line="42" selection-end-line="42" />
+            <state relative-caret-position="-1">
+              <caret line="201" column="46" lean-forward="true" selection-start-line="201" selection-start-column="46" selection-end-line="201" selection-end-column="46" />
+              <folding>
+                <element signature="e#187#222#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils.py">
+        <entry file="file://$PROJECT_DIR$/test_v2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
+            <state relative-caret-position="254">
+              <caret line="38" column="25" lean-forward="true" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="25" />
               <folding>
-                <element signature="e#189#199#0" expanded="true" />
+                <element signature="e#19#34#0" expanded="true" />
               </folding>
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testing_imgs/test_1.jpg">
+          <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
     </leaf>
@@ -97,14 +101,15 @@
         <option value="$PROJECT_DIR$/models/icnet/model.py" />
         <option value="$PROJECT_DIR$/train.py" />
         <option value="$PROJECT_DIR$/configs.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/models/icnet.py" />
+        <option value="$PROJECT_DIR$/test_v2.py" />
         <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/train_v2.py" />
-        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="57" />
     <option name="y" value="27" />
     <option name="width" value="772" />
@@ -115,7 +120,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -123,15 +127,11 @@
               <item name="semantic-segmentation" type="b2602c69:ProjectViewProjectNode" />
               <item name="semantic-segmentation" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="semantic-segmentation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="semantic-segmentation" type="462c0819:PsiDirectoryNode" />
-              <item name="logs" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -178,12 +178,14 @@
       <workItem from="1546276655435" duration="1395000" />
       <workItem from="1546283745036" duration="2740000" />
       <workItem from="1546292643993" duration="733000" />
-      <workItem from="1546379412477" duration="5352000" />
+      <workItem from="1546379412477" duration="10977000" />
+      <workItem from="1546400775556" duration="4872000" />
+      <workItem from="1546439967991" duration="5031000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59732000" />
+    <option name="totallyTimeSpent" value="75260000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -198,7 +200,7 @@
     <frame x="57" y="27" width="1543" height="873" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23246492" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23914495" />
       <window_info id="Favorites" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32972974" />
@@ -209,10 +211,10 @@
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.499666" weight="0.32972974" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49833" visible="true" weight="0.34864864" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" sideWeight="0.49833" visible="true" weight="0.3391892" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50167" side_tool="true" weight="0.47297296" />
       <window_info anchor="bottom" id="Version Control" order="11" />
-      <window_info anchor="bottom" id="Python Console" order="12" />
+      <window_info anchor="bottom" id="Python Console" order="12" weight="0.32972974" />
       <window_info anchor="bottom" id="Thumbnails" order="13" weight="0.32972974" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -260,21 +262,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/keras/engine/training_generator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="179" selection-start-line="179" selection-end-line="179" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/debug.py" />
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/keras/engine/training.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="1148" selection-start-line="1148" selection-end-line="1148" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/lib/python2.7/dist-packages/matplotlib/backends/_backend_tk.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="318">
@@ -311,44 +299,97 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils.py">
+    <entry file="file:///usr/local/lib/python2.7/dist-packages/keras/callbacks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
-          <folding>
-            <element signature="e#189#199#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="155">
+          <caret line="729" column="23" selection-start-line="729" selection-start-column="23" selection-end-line="729" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/keras/callbacks.py">
+    <entry file="file://$PROJECT_DIR$/media/image-1.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testing_imgs/test_9.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testing_imgs/test_0.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testing_imgs/test_8.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="729" column="8" selection-start-line="729" selection-start-column="8" selection-end-line="729" selection-end-column="8" />
+        <state relative-caret-position="60">
+          <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.7/dist-packages/keras/engine/training.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="513" column="21" selection-start-line="513" selection-start-column="21" selection-end-line="513" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.7/dist-packages/keras/engine/training_generator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="214" column="37" lean-forward="true" selection-start-line="214" selection-start-column="37" selection-end-line="214" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.7/dist-packages/keras/layers/convolutional.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="456" column="8" selection-start-line="456" selection-start-column="8" selection-end-line="456" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testing_imgs/test_1.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2018.3/system/python_stubs/-1247972723/cv2/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-27">
+          <caret line="2464" column="4" selection-start-line="2464" selection-start-column="4" selection-end-line="2464" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_v2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="38" column="25" lean-forward="true" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="25" />
+          <folding>
+            <element signature="e#19#34#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/models/icnet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="42" selection-start-line="42" selection-end-line="42" />
+        <state relative-caret-position="-1">
+          <caret line="201" column="46" lean-forward="true" selection-start-line="201" selection-start-column="46" selection-end-line="201" selection-end-column="46" />
+          <folding>
+            <element signature="e#187#222#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="176" column="21" lean-forward="true" selection-start-line="176" selection-start-column="21" selection-end-line="176" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/train_v2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="83">
-          <caret line="33" column="38" selection-start-line="33" selection-start-column="38" selection-end-line="33" selection-end-column="38" />
+        <state relative-caret-position="195">
+          <caret line="42" selection-start-line="42" selection-start-column="2" selection-end-line="50" selection-end-column="12" />
           <folding>
             <element signature="e#19#52#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
