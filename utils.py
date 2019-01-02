@@ -2,29 +2,38 @@
 # utilities for semantic segmentation
 # autonomous golf cart project
 # (c) Yongyang Nie, Michael Meng
-# ==============================================================================
 #
 
 import cv2
 import configs as configs
 import numpy as np
-import os
+import pandas
 from collections import namedtuple
+import os
+import glob
+import random
+import json
+import gc
+
+from keras.utils import to_categorical
+from keras.callbacks import Callback
+from keras.utils.data_utils import Sequence
+
 
 Label = namedtuple('Label', [
 
     'name'        , # The identifier of this label, e.g. 'car', 'person', ... .
-                    # We use them to uniquely name a class
+    # We use them to uniquely name a class
 
     'id'          , # An integer ID that is associated with this label.
-                    # The IDs are used to represent the label in ground truth images
-                    # An ID of -1 means that this label does not have an ID and thus
-                    # is ignored when creating ground truth images (e.g. license plate).
-                    # Do not modify these IDs, since exactly these IDs are expected by the
-                    # evaluation server.
+    # The IDs are used to represent the label in ground truth images
+    # An ID of -1 means that this label does not have an ID and thus
+    # is ignored when creating ground truth images (e.g. license plate).
+    # Do not modify these IDs, since exactly these IDs are expected by the
+    # evaluation server.
 
     'color'       , # The color of this label
-    ])
+])
 
 
 labels = [
@@ -44,6 +53,7 @@ labels = [
     Label(  'bicycle'              , 33 ,       (119, 11, 32) ),
 ]
 
+
 def bc_img(img, s = 1.0, m = 0.0):
     img = img.astype(np.int)
     img = img * s + m
@@ -53,17 +63,6 @@ def bc_img(img, s = 1.0, m = 0.0):
     return img
 
 
-def prepare_dataset(path):
-
-    inputs = os.listdir(path)
-    imgs = os.listdir(path)
-
-    for i in range(len(imgs)):
-        imgs[i] = imgs[i][:-11] + "_road" + imgs[i][-11:]
-
-    return inputs, imgs
-
-
 def load_image(path):
 
     img = cv2.imread(path)
@@ -71,28 +70,6 @@ def load_image(path):
     img = cv2.resize(img, (configs.img_width, configs.img_height))
 
     return img
-
-
-def convert_rgb_to_class(image):
-
-    outputs = []
-
-    for i in range(len(labels)):
-
-        label = labels[i]
-        color = np.array(label[2], dtype=np.uint8)
-        # objects found in the frame.
-        mask = cv2.inRange(image, color, color)
-
-        # divide each pixel by 255
-        mask = np.true_divide(mask, 255)
-
-        if len(outputs) == 0:
-            outputs = mask
-        else:
-            outputs = np.dstack((outputs, mask))
-
-    return outputs
 
 
 def convert_class_to_rgb(image_labels, threshold=0.25):
@@ -124,66 +101,316 @@ def convert_class_to_rgb(image_labels, threshold=0.25):
 
     return output
 
+# The new training generator
+def train_generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, horizontal_flip=False,
+                    vertical_flip=False, brightness=0.1, rotation=0.0, zoom=0.0, augmentation=True):
 
-def validation_generator(labels, batch_size):
-
-    batch_images = np.zeros((batch_size, configs.img_height, configs.img_width, 3))
-    batch_masks = np.zeros((batch_size, configs.img_height, configs.img_width, 3))
-
-    while 1:
-
-        for index in np.random.permutation(len(labels)):
-
-            label = labels[index]
-            image = load_image(configs.data_path + "leftImg8bit/val/" + label[1])
-            gt_image = load_image(configs.data_path + "gtFine/val/" + label[2])
-
-            batch_images[index] = image
-            batch_masks[index] = gt_image
-
-        yield batch_images, batch_masks
-
-
-def train_generator(df, batch_size):
-
-    """
-    An important method that returns the generator used
-    for training the segmentation network
-
-    :param df: data frame, the loaded csv data
-    :param batch_size: training batch size
-    :return: training generator
-    """
-
-    batch_images = np.zeros((batch_size, configs.img_height, configs.img_width, 3))
-    batch_masks = np.zeros((batch_size, configs.img_height, configs.img_width, len(labels)))
+    X = np.zeros((batch_size, crop_shape[1], crop_shape[0], 3), dtype='float32')
+    Y1 = np.zeros((batch_size, crop_shape[1] // 4, crop_shape[0] // 4, len(labels)), dtype='float32')
+    Y2 = np.zeros((batch_size, crop_shape[1] // 8, crop_shape[0] // 8, len(labels)), dtype='float32')
+    Y3 = np.zeros((batch_size, crop_shape[1] // 16, crop_shape[0] // 16, len(labels)), dtype='float32')
 
     while 1:
-        i = 0
+        j = 0
+
         for index in np.random.permutation(len(df)):
 
-            label = df[index]
+            image_path = df[index][0]
+            label_path = df[index][1]
+            image = cv2.imread(image_path, 1)
+            label = cv2.imread(label_path, 0)
 
-            image = np.array(load_image(label[0]), dtype=np.float32) / 255
-            gt_image = load_image(label[1])
-            batch_images[i] = image
-            batch_masks[i] = convert_rgb_to_class(gt_image)
+            if resize_shape:
+                image = cv2.resize(image, resize_shape)
+                label = cv2.resize(label, resize_shape)
 
-            i += 1
-            if i == batch_size:
+            # Do augmentation (only if training)
+            if augmentation:
+                if horizontal_flip and random.randint(0, 1):
+                    image = cv2.flip(image, 1)
+                    label = cv2.flip(label, 1)
+                if vertical_flip and random.randint(0, 1):
+                    image = cv2.flip(image, 0)
+                    label = cv2.flip(label, 0)
+                if brightness:
+                    factor = 1.0 + abs(random.gauss(mu=0.0, sigma=brightness))
+                    if random.randint(0, 1):
+                        factor = 1.0 / factor
+                    table = np.array([((i / 255.0) ** factor) * 255 for i in np.arange(0, 256)]).astype(np.uint8)
+                    image = cv2.LUT(image, table)
+                if rotation:
+                    angle = random.gauss(mu=0.0, sigma=rotation)
+                else:
+                    angle = 0.0
+                if zoom:
+                    scale = random.gauss(mu=1.0, sigma=zoom)
+                else:
+                    scale = 1.0
+                if rotation or zoom:
+                    M = cv2.getRotationMatrix2D((image.shape[1] // 2, image.shape[0] // 2), angle, scale)
+                    image = cv2.warpAffine(image, M, (image.shape[1], image.shape[0]))
+                    label = cv2.warpAffine(label, M, (label.shape[1], label.shape[0]))
+                if crop_shape:
+                    image, label = _random_crop(image, label, crop_shape)
+
+            X[j] = image
+            # only keep the useful classes
+            y1 = _filter_labels(to_categorical(cv2.resize(label, (label.shape[1] // 4, label.shape[0] // 4)), n_classes)).transpose()
+            y2 = _filter_labels(to_categorical(cv2.resize(label, (label.shape[1] // 8, label.shape[0] // 8)), n_classes)).transpose()
+            y3 = _filter_labels(to_categorical(cv2.resize(label, (label.shape[1] // 16, label.shape[0] // 16)), n_classes)).transpose()
+
+            Y1[j] = y1.reshape((label.shape[0] // 4, label.shape[1] // 4, -1))
+            Y2[j] = y2.reshape((label.shape[0] // 8, label.shape[1] // 8, -1))
+            Y3[j] = y3.reshape((label.shape[0] // 16, label.shape[1] // 16, -1))
+
+            j += 1
+            if j == batch_size:
                 break
 
-        yield batch_images, batch_masks
+        yield X, [Y1, Y2, Y3]
+
+##############################################################
+#################City Scape Generator#########################
+
+# * Not working currently
+
+class CityScapeGenerator(Sequence):
+
+    def __init__(self, csv_path, mode='training', n_classes=66, batch_size=1, resize_shape=None, crop_shape=(640, 320),
+                 horizontal_flip=False, vertical_flip=False, brightness=0.1, rotation=0.0, zoom=0.0):
+
+        """
+
+        :param csv_path:    the path of the csv file which contains paths to labels
+        :param mode:
+        :param n_classes:
+        :param batch_size:
+        :param resize_shape:
+        :param crop_shape:
+        :param horizontal_flip:
+        :param vertical_flip:
+        :param brightness:
+        :param rotation:
+        :param zoom:
+        """
+        self.image_path_list, self.label_path_list = _load_data(csv_path)
+
+        self.mode = mode
+        self.n_classes = n_classes
+        self.batch_size = batch_size
+        self.resize_shape = resize_shape
+        self.crop_shape = crop_shape
+        self.horizontal_flip = horizontal_flip
+        self.vertical_flip = vertical_flip
+        self.brightness = brightness
+        self.rotation = rotation
+        self.zoom = zoom
+
+        # Preallocate memory
+        if mode == 'training' and self.crop_shape:
+            self.X = np.zeros((batch_size, crop_shape[1], crop_shape[0], 3), dtype='float32')
+            self.Y1 = np.zeros((batch_size, crop_shape[1] // 4, crop_shape[0] // 4, self.n_classes), dtype='float32')
+            self.Y2 = np.zeros((batch_size, crop_shape[1] // 8, crop_shape[0] // 8, self.n_classes), dtype='float32')
+            self.Y3 = np.zeros((batch_size, crop_shape[1] // 16, crop_shape[0] // 16, self.n_classes), dtype='float32')
+        elif self.resize_shape:
+            self.X = np.zeros((batch_size, resize_shape[1], resize_shape[0], 3), dtype='float32')
+            self.Y1 = np.zeros((batch_size, resize_shape[1] // 4, resize_shape[0] // 4, self.n_classes), dtype='float32')
+            self.Y2 = np.zeros((batch_size, resize_shape[1] // 8, resize_shape[0] // 8, self.n_classes), dtype='float32')
+            self.Y3 = np.zeros((batch_size, resize_shape[1] // 16, resize_shape[0] // 16, self.n_classes), dtype='float32')
+        else:
+            raise Exception('No image dimensions specified!')
+
+    def __len__(self):
+        return len(self.image_path_list) // self.batch_size
+
+    def __getitem__(self, i):
+
+        for n, (image_path, label_path) in enumerate(zip(self.image_path_list[i * self.batch_size:(i + 1) * self.batch_size],
+                                                         self.label_path_list[i * self.batch_size:(i + 1) * self.batch_size])):
+
+            image = cv2.imread(image_path, 1)
+            label = cv2.imread(label_path, 0)
+
+            if self.resize_shape:
+                image = cv2.resize(image, self.resize_shape)
+                label = cv2.resize(label, self.resize_shape)
+
+            # Do augmentation (only if training)
+            if self.mode == 'training':
+                if self.horizontal_flip and random.randint(0, 1):
+                    image = cv2.flip(image, 1)
+                    label = cv2.flip(label, 1)
+                if self.vertical_flip and random.randint(0, 1):
+                    image = cv2.flip(image, 0)
+                    label = cv2.flip(label, 0)
+                if self.brightness:
+                    factor = 1.0 + abs(random.gauss(mu=0.0, sigma=self.brightness))
+                    if random.randint(0, 1):
+                        factor = 1.0 / factor
+                    table = np.array([((i / 255.0) ** factor) * 255 for i in np.arange(0, 256)]).astype(np.uint8)
+                    image = cv2.LUT(image, table)
+                if self.rotation:
+                    angle = random.gauss(mu=0.0, sigma=self.rotation)
+                else:
+                    angle = 0.0
+                if self.zoom:
+                    scale = random.gauss(mu=1.0, sigma=self.zoom)
+                else:
+                    scale = 1.0
+                if self.rotation or self.zoom:
+                    M = cv2.getRotationMatrix2D((image.shape[1] // 2, image.shape[0] // 2), angle, scale)
+                    image = cv2.warpAffine(image, M, (image.shape[1], image.shape[0]))
+                    label = cv2.warpAffine(label, M, (label.shape[1], label.shape[0]))
+                if self.crop_shape:
+                    image, label = _random_crop(image, label, self.crop_shape)
+
+            self.X[n] = image
+            # only keep the useful classes
+
+            y1 = _filter_labels(to_categorical(cv2.resize(label, (label.shape[1] // 4, label.shape[0] // 4)), self.n_classes)).transpose()
+            y2 = _filter_labels(to_categorical(cv2.resize(label, (label.shape[1] // 8, label.shape[0] // 8)), self.n_classes)).transpose()
+            y3 = _filter_labels(to_categorical(cv2.resize(label, (label.shape[1] // 16, label.shape[0] // 16)), self.n_classes)).transpose()
+
+            self.Y1[n] = y1.reshape((label.shape[0] // 4, label.shape[1] // 4, -1))
+            self.Y2[n] = y2.reshape((label.shape[0] // 8, label.shape[1] // 8, -1))
+            self.Y3[n] = y3.reshape((label.shape[0] // 16, label.shape[1] // 16, -1))
+
+        return self.X, [self.Y1, self.Y2, self.Y3]
+
+    def on_epoch_end(self):
+        # Shuffle dataset for next epoch
+        c = list(zip(self.image_path_list, self.label_path_list))
+        random.shuffle(c)
+        self.image_path_list, self.label_path_list = zip(*c)
+
+        # Fix memory leak (Keras bug)
+        gc.collect()
 
 
-"""
-The main method is used 
-for testing the helper methods
-"""
+class Visualization(Callback):
 
-if __name__ == "__main__":
+    def __init__(self, resize_shape=(640, 320), batch_steps=10, n_gpu=1, **kwargs):
+        super(Visualization, self).__init__(**kwargs)
+        self.resize_shape = resize_shape
+        self.batch_steps = batch_steps
+        self.n_gpu = n_gpu
+        self.counter = 0
 
-    img = load_image("./testing_imgs/test.png")
-    print(img.shape)
-    array = convert_rgb_to_class(img)
-    image = convert_class_to_rgb(array)
+        # TODO: Remove this lazy hardcoded paths
+        self.test_images_list = glob.glob('datasets/mapillary/testing/images/*')
+        with open('datasets/mapillary/config.json') as config_file:
+            config = json.load(config_file)
+        self.labels = config['labels']
+
+    def on_batch_end(self, batch, logs={}):
+        self.counter += 1
+
+        if self.counter == self.batch_steps:
+            self.counter = 0
+
+            test_image = cv2.resize(cv2.imread(random.choice(self.test_images_list), 1), self.resize_shape)
+
+            inputs = [test_image] * self.n_gpu
+            output, _, _ = self.model.predict(np.array(inputs), batch_size=self.n_gpu)
+
+            cv2.imshow('input', test_image)
+            cv2.waitKey(1)
+            cv2.imshow('output', apply_color_map(np.argmax(output[0], axis=-1), self.labels))
+            cv2.waitKey(1)
+
+
+class PolyDecay:
+    def __init__(self, initial_lr, power, n_epochs):
+        self.initial_lr = initial_lr
+        self.power = power
+        self.n_epochs = n_epochs
+
+    def scheduler(self, epoch):
+        return self.initial_lr * np.power(1.0 - 1.0 * epoch / self.n_epochs, self.power)
+
+
+class ExpDecay:
+    def __init__(self, initial_lr, decay):
+        self.initial_lr = initial_lr
+        self.decay = decay
+
+    def scheduler(self, epoch):
+        return self.initial_lr * np.exp(-self.decay * epoch)
+
+
+# Taken from Mappillary Vistas demo.py
+def apply_color_map(image_array, labels):
+    color_array = np.zeros((image_array.shape[0], image_array.shape[1], 3), dtype=np.uint8)
+
+    for label_id, label in enumerate(labels):
+        # set all pixels with the current label to the color of the current label
+        color_array[image_array == label_id] = label["color"]
+
+    return color_array
+
+
+def _random_crop(image, label, crop_shape):
+    if (image.shape[0] != label.shape[0]) or (image.shape[1] != label.shape[1]):
+        raise Exception('Image and label must have the same dimensions!')
+
+    if (crop_shape[0] < image.shape[1]) and (crop_shape[1] < image.shape[0]):
+        x = random.randrange(image.shape[1] - crop_shape[0])
+        y = random.randrange(image.shape[0] - crop_shape[1])
+
+        return image[y:y + crop_shape[1], x:x + crop_shape[0], :], label[y:y + crop_shape[1], x:x + crop_shape[0]]
+    else:
+        raise Exception('Crop shape exceeds image dimensions!')
+
+
+def load_data():
+
+    labels = pandas.read_csv(configs.labelid_path).values
+    df = []
+    count = 0
+    for row in labels:
+        if os.path.isfile(row[0]) and os.path.isfile(row[1]):
+            count = count + 1
+            df.append(row)
+
+    print("data processing finished")
+    print("data frame size: " + str(count))
+
+    return df
+
+def _load_data(csv_path):
+
+    labels = pandas.read_csv(csv_path)
+    img_list_initial = labels[labels.columns[0]].values
+    label_list_initial = labels[labels.columns[0]].values
+
+    img_list = []
+    label_list = []
+    count = 0
+    for i in range(len(img_list)):
+        if os.path.isfile(img_list_initial[i]) and os.path.isfile(label_list_initial[i]):
+            count = count + 1
+            img_list.append(img_list_initial[i])
+            label_list.append(label_list_initial[i])
+
+    print("data processing finished")
+    print("data frame size: " + str(count))
+
+    return img_list, label_list
+
+
+def _filter_labels(categorical_labels):
+
+    new_label = np.stack((categorical_labels[:, :, 0],
+                          categorical_labels[:, :, 6],
+                          categorical_labels[:, :, 7],
+                          categorical_labels[:, :, 8],
+                          categorical_labels[:, :, 11],
+                          categorical_labels[:, :, 17],
+                          categorical_labels[:, :, 21],
+                          categorical_labels[:, :, 22],
+                          categorical_labels[:, :, 23],
+                          categorical_labels[:, :, 24],
+                          categorical_labels[:, :, 26],
+                          categorical_labels[:, :, 32],
+                          categorical_labels[:, :, 33]))
+    return new_label

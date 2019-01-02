@@ -1,1 +1,5 @@
+# Git will ignore the following
+# files or directories
+
 *.h5
+logs/enet

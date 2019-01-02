@@ -47,22 +47,6 @@ def train(model, epochs, steps_epch, train_gen, save_path, test_result=False):
             plt.show()
 
 
-def load_data():
-
-    labels = pandas.read_csv(configs.data_path).values
-    df = []
-    count = 0
-    for row in labels:
-        if os.path.isfile(row[0]) and os.path.isfile(row[1]):
-            count = count + 1
-            df.append(row)
-
-    print("data processing finished")
-    print("data frame size: " + str(count))
-
-    return df
-
-
 if __name__ == "__main__":
 
     # model = enet.build(len(utils.labels), configs.img_height, configs.img_width)

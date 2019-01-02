@@ -2,13 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f2ac002-8e16-4061-9255-f22003626f8d" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/train_v2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/Data Preprocessing-checkpoint.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/enet2-1/2018-12-25 23:14:38.790154/events.out.tfevents.1545797696.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/icnet/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/icnet/decoder.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/icnet/encoder.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/icnet/model.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data Preprocessing.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Data Preprocessing.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/enet_v1/2018-12-25 11:11:38.154500/events.out.tfevents.1545754316.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/enet_v2/2018-12-25 11:26:05.518711/events.out.tfevents.1545755181.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/enet_v3/2018-12-25 13:14:59.898355/events.out.tfevents.1545761716.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/enet_v4/2018-12-25 14:53:08.792419/events.out.tfevents.1545767605.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/enet_v4/2018-12-25 17:32:51.094477/events.out.tfevents.1545777187.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/enet_v5/2018-12-25 18:40:26.374973/events.out.tfevents.1545781242.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/enet_v6/2018-12-25 19:35:21.825461/events.out.tfevents.1545784537.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/enet_v7/2018-12-25 20:02:28.904008/events.out.tfevents.1545786165.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/enet_v7/2018-12-25 20:03:39.091831/events.out.tfevents.1545786234.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/icnet.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/icnet.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
@@ -21,22 +29,31 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train.py">
+        <entry file="file://$PROJECT_DIR$/train_v2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="83" column="35" selection-start-line="83" selection-start-column="35" selection-end-line="83" selection-end-column="35" />
+            <state relative-caret-position="83">
+              <caret line="33" column="38" selection-start-line="33" selection-start-column="38" selection-end-line="33" selection-end-column="38" />
               <folding>
-                <element signature="e#105#154#0" expanded="true" />
+                <element signature="e#19#52#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/icnet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-135">
-              <caret line="35" column="23" lean-forward="true" selection-start-line="35" selection-start-column="23" selection-end-line="35" selection-end-column="23" />
+            <state>
+              <caret line="42" selection-start-line="42" selection-end-line="42" />
             </state>
           </provider>
         </entry>
@@ -44,8 +61,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1305">
-              <caret line="91" column="13" selection-start-line="91" selection-start-column="13" selection-end-line="91" selection-end-column="13" />
+            <state relative-caret-position="15">
+              <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
               <folding>
                 <element signature="e#189#199#0" expanded="true" />
               </folding>
@@ -75,22 +92,23 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/test.py" />
-        <option value="$PROJECT_DIR$/configs.py" />
         <option value="$PROJECT_DIR$/debug.py" />
         <option value="$PROJECT_DIR$/models/enet_naive_upsampling/model.py" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/models/icnet/model.py" />
         <option value="$PROJECT_DIR$/train.py" />
+        <option value="$PROJECT_DIR$/configs.py" />
         <option value="$PROJECT_DIR$/models/icnet.py" />
+        <option value="$PROJECT_DIR$/utils.py" />
+        <option value="$PROJECT_DIR$/train_v2.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="83" />
-    <option name="y" value="45" />
-    <option name="width" value="1380" />
-    <option name="height" value="768" />
+    <option name="x" value="57" />
+    <option name="y" value="27" />
+    <option name="width" value="772" />
+    <option name="height" value="873" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -104,6 +122,11 @@
             <path>
               <item name="semantic-segmentation" type="b2602c69:ProjectViewProjectNode" />
               <item name="semantic-segmentation" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="semantic-segmentation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="semantic-segmentation" type="462c0819:PsiDirectoryNode" />
+              <item name="logs" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -155,11 +178,12 @@
       <workItem from="1546276655435" duration="1395000" />
       <workItem from="1546283745036" duration="2740000" />
       <workItem from="1546292643993" duration="733000" />
+      <workItem from="1546379412477" duration="5352000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49299000" />
+    <option name="totallyTimeSpent" value="59732000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -172,8 +196,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="57" y="27" width="1543" height="873" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24582498" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23246492" />
       <window_info id="Favorites" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32972974" />
@@ -228,13 +253,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/keras/utils/data_utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9915">
-          <caret line="684" selection-start-line="684" selection-end-line="684" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/lib/python2.7/dist-packages/keras/legacy/interfaces.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-15">
@@ -250,13 +268,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/debug.py" />
-    <entry file="file://$PROJECT_DIR$/configs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="62" selection-start-line="15" selection-start-column="62" selection-end-line="15" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/lib/python2.7/dist-packages/keras/engine/training.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -271,13 +282,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="4" selection-start-column="4" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/enet_naive_upsampling/model.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="137">
@@ -286,30 +290,65 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/models/icnet/model.py" />
+    <entry file="file://$PROJECT_DIR$/configs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="48" selection-start-line="16" selection-start-column="48" selection-end-line="16" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="83" column="35" selection-start-line="83" selection-start-column="35" selection-end-line="83" selection-end-column="35" />
-          <folding>
-            <element signature="e#105#154#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-8">
+          <caret line="56" column="8" lean-forward="true" selection-start-line="56" selection-start-column="8" selection-end-line="56" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.7/dist-packages/keras/utils/data_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="370" column="20" selection-start-line="370" selection-start-column="20" selection-end-line="370" selection-end-column="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1305">
-          <caret line="91" column="13" selection-start-line="91" selection-start-column="13" selection-end-line="91" selection-end-column="13" />
+        <state relative-caret-position="15">
+          <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
           <folding>
             <element signature="e#189#199#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file:///usr/local/lib/python2.7/dist-packages/keras/callbacks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="729" column="8" selection-start-line="729" selection-start-column="8" selection-end-line="729" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/models/icnet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-135">
-          <caret line="35" column="23" lean-forward="true" selection-start-line="35" selection-start-column="23" selection-end-line="35" selection-end-column="23" />
+        <state>
+          <caret line="42" selection-start-line="42" selection-end-line="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_v2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="33" column="38" selection-start-line="33" selection-start-column="38" selection-end-line="33" selection-end-column="38" />
+          <folding>
+            <element signature="e#19#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>

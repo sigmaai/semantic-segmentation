@@ -14,5 +14,6 @@ visualize_gen = False
 epochs = 2
 
 data_path = '/hdd/ssd_2/dataset/segmentation/train_labels.csv'
+labelid_path = '/hdd/ssd_2/dataset/segmentation/labels.csv'
 infer_model_path = './weights/enet-c-v1-3.h5'
 test_dataset = "/Volumes/Personal_Drive/Datasets/CityScapes/"
