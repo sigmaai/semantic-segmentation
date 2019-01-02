@@ -24,14 +24,14 @@ import tensorflow as tf
 
 class ICNet():
 
-    def __init__(self, width, height, n_classes, weight_path=None):
+    def __init__(self, width, height, n_classes, weight_path=None, training=False):
 
         self.width = width
         self.height = height
         self.n_classes = n_classes
         self.weight_path = weight_path
 
-        self.model = self.build(width=self.width, height=self.height, n_classes=self.n_classes, train=False)
+        self.model = self.build_bn(width=self.width, height=self.height, n_classes=self.n_classes, train=training)
 
         if weight_path:
             self.model.load_weights(weight_path)
@@ -40,6 +40,7 @@ class ICNet():
             print("Model Created \n No weight path provided. ")
 
     def build(self, width, height, n_classes, weights_path=None, train=False):
+
         inp = Input(shape=(height, width, 3))
         x = Lambda(lambda x: (x - 127.5) / 255.0)(inp)
 
@@ -220,7 +221,7 @@ class ICNet():
             model.load_weights(weights_path, by_name=True)
         return model
 
-    def build_bn(width, height, n_classes, weights_path=None, train=False):
+    def build_bn(self, width, height, n_classes, weights_path=None, train=False):
         inp = Input(shape=(height, width, 3))
         x = Lambda(lambda x: (x - 127.5) / 255.0)(inp)
 
