@@ -1,6 +1,6 @@
 # Semantic Segmentation
 
-🚧 this is still under development 🏗
+🚧 This is still under development 🏗
 
 Semantic segmentation has become an important component of self-driving vehicles. It allows the car to understand the surroundings by classifying every pixel of the input image.
 
@@ -27,23 +27,16 @@ The pre-trained weights are stored in the `./weights` directory.
 
 ## Models
 
-The goal is to achieve real time semantic segmentation. Therefore, choosing & developing the appropriate model is critical.
+The goal is to achieve real time semantic segmentation. Therefore, choosing & developing the appropriate model is critical. 
+I experimented with UNet and ENet, but realized drawbacks to both of these architectures. I eventually landed on ICNet, which
+stands for image cascade network
 
-### ENet
-This is a little bit from their paper:
+![](./media/model_overview.png)
 
-"*...we propose
-a novel deep neural network architecture named ENet (efficient neural network),
-created specifically for tasks requiring low latency operation. ENet is up to 18× faster, requires 75× less FLOPs, has 79× less parameters, and provides similar or
-better accuracy to existing models. We have tested it on ... datasets and report on comparisons with existing state-of-the-art methods,
-and the trade-offs between accuracy and processing time of a network...*"
+Here is a simple benchmark comparison between ICNet and other popular semantic segmentation models. These images and visualizations
+are from the original ICNet paper, which can be found [here](https://arxiv.org/abs/1704.08545).  
 
-"ENet: A Deep Neural Network Architecture for
-Real-Time Semantic Segmentation" (2016) Adam P., Abhishek C, Sangpil K., Eugenio C
-
-Fore more information, please visit their paper [here](https://arxiv.org/pdf/1606.02147.pdf)
-
-The implementation of ENet is done in Keras. 
+![](./media/model_comparison.png)
 
 ## About
 

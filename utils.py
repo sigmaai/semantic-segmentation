@@ -97,7 +97,6 @@ def convert_class_to_rgb(image_labels, threshold=0.25):
 
         output = cv2.addWeighted(output, 1.0, res, 1.0, 0)
 
-
     return output
 
 # The new training generator

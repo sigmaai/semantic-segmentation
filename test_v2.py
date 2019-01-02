@@ -34,16 +34,16 @@ print(net.model.summary())
 # Testing
 x = cv2.resize(cv2.imread("./testing_imgs/test_6.jpg", 1), (512, 512))
 x = np.array([x])
-# start_time = time.time()
+start_time = time.time()
 y = net.model.predict(x)[0]
 y = cv2.resize(y, (512, 512))
 image = utils.convert_class_to_rgb(y, threshold=0.25)
 plt.imshow(image)
 plt.show()
 # cv2.imwrite('output/output_sample.png', cv2.resize(y, (512, 512)))
-# duration = time.time() - start_time
+duration = time.time() - start_time
 
-# print('Generated segmentations in %s seconds -- %s FPS' % (duration, 1.0/duration))
+print('Generated segmentations in %s seconds -- %s FPS' % (duration, 1.0/duration))
 
 # Save output image
 with open('datasets/mapillary/config.json') as config_file:
