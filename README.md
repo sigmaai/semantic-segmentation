@@ -36,7 +36,9 @@ stands for image cascade network
 Here is a simple benchmark comparison between ICNet and other popular semantic segmentation models. These images and visualizations
 are from the original ICNet paper, which can be found [here](https://arxiv.org/abs/1704.08545).  
 
-![](./media/model_comparison.png)
+<center>
+<img src="./media/model_comparison.png" alt="image" width="500">
+</center>
 
 ## About
 

@@ -21,7 +21,7 @@ import configs
 ## Parameters:
 
 batch_size = 5
-epochs = 10
+epochs = 20
 
 #### Train ####
 
@@ -57,9 +57,10 @@ optim = optimizers.SGD(lr=0.01, momentum=0.9)
 net = ICNet(width=512, height=512, n_classes=13, weight_path=None, training=False)
 print(net.model.summary())
 # Training
-# net.model.load_weights("icnet3-v1.h5")
+
+net.model.load_weights("icnet3-v9.h5")
 net.model.compile(optim, 'categorical_crossentropy', metrics=['categorical_accuracy'])
 net.model.fit_generator(generator=train_generator, steps_per_epoch=1000, epochs=epochs, callbacks=[tensorboard, lr_decay],
                         shuffle=True, max_queue_size=5)
 
-net.model.save("icnet3-v1.h5")
+net.model.save("icnet3-v10.h5")
