@@ -20,7 +20,7 @@ import configs
 
 ## Parameters:
 
-batch_size = 5
+batch_size = 3
 epochs = 20
 
 #### Train ####
@@ -32,13 +32,13 @@ sess = tf.Session(config=config)
 K.set_session(sess)
 
 # Callbacks
-checkpoint = ModelCheckpoint('output/weights.{epoch:03d}-{val_conv6_cls_categorical_accuracy:.3f}.h5', monitor='val_conv6_cls_categorical_accuracy', mode='max')
-tensorboard = TensorBoard(batch_size=batch_size, log_dir="./logs/ICNet/{}/".format(strftime("%Y-%m-%d-%H-%M-%S", gmtime())))
+checkpoint = ModelCheckpoint('output/weights.{epoch:03d}-{val_conv6_cls_categorical_accuracy:.3f}.h5', mode='max')
+tensorboard = TensorBoard(batch_size=batch_size, log_dir="./logs/ICNet/full/{}/".format(strftime("%Y-%m-%d-%H-%M-%S", gmtime())))
 lr_decay = LearningRateScheduler(PolyDecay(0.01, 0.9, epochs).scheduler)
 
 # Generators
 train_generator = utils.generator(df=utils.load_data(), batch_size=batch_size,
-                                  resize_shape=(512, 512), n_classes=34, training=False, crop_shape=(512, 512))
+                                  resize_shape=(512, 512), n_classes=34, training=True, crop_shape=(512, 512))
 
 # image, label = next(train_generator)
 # img = np.array(image[0,:,:,:], dtype=np.float32)
@@ -54,13 +54,13 @@ train_generator = utils.generator(df=utils.load_data(), batch_size=batch_size,
 optim = optimizers.SGD(lr=0.01, momentum=0.9)
 
 # Model
-net = ICNet(width=512, height=512, n_classes=13, weight_path=None, training=False)
+net = ICNet(width=512, height=512, n_classes=34, weight_path=None, training=False)
 print(net.model.summary())
 # Training
 
-net.model.load_weights("icnet3-v9.h5")
+net.model.load_weights("icnet_full-v2.h5")
 net.model.compile(optim, 'categorical_crossentropy', metrics=['categorical_accuracy'])
-net.model.fit_generator(generator=train_generator, steps_per_epoch=1000, epochs=epochs, callbacks=[tensorboard, lr_decay],
-                        shuffle=True, max_queue_size=5)
+net.model.fit_generator(generator=train_generator, steps_per_epoch=1500, epochs=epochs, callbacks=[tensorboard, lr_decay],
+                        shuffle=True, max_queue_size=5, use_multiprocessing=True, workers=12)
 
-net.model.save("icnet3-v10.h5")
+net.model.save("icnet_full-v3.h5")

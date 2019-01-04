@@ -104,9 +104,9 @@ def generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, hor
                     vertical_flip=False, brightness=0.1, rotation=0.0, zoom=0.0, training=True):
 
     X = np.zeros((batch_size, crop_shape[1], crop_shape[0], 3), dtype='float32')
-    Y1 = np.zeros((batch_size, crop_shape[1] // 4, crop_shape[0] // 4, len(labels)), dtype='float32')
-    Y2 = np.zeros((batch_size, crop_shape[1] // 8, crop_shape[0] // 8, len(labels)), dtype='float32')
-    Y3 = np.zeros((batch_size, crop_shape[1] // 16, crop_shape[0] // 16, len(labels)), dtype='float32')
+    Y1 = np.zeros((batch_size, crop_shape[1] // 4, crop_shape[0] // 4, n_classes), dtype='float32')
+    Y2 = np.zeros((batch_size, crop_shape[1] // 8, crop_shape[0] // 8, n_classes), dtype='float32')
+    Y3 = np.zeros((batch_size, crop_shape[1] // 16, crop_shape[0] // 16, n_classes), dtype='float32')
 
     while 1:
         j = 0
@@ -157,15 +157,17 @@ def generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, hor
                     M = cv2.getRotationMatrix2D((image.shape[1] // 2, image.shape[0] // 2), angle, scale)
                     image = cv2.warpAffine(image, M, (image.shape[1], image.shape[0]))
                     label = cv2.warpAffine(label, M, (label.shape[1], label.shape[0]))
-                if crop_shape:
-                    image, label = _random_crop(image, label, crop_shape)
 
             X[j] = image
 
             # only keep the useful classes
-            y1 = _filter_labels(to_categorical(cv2.resize(label, (label.shape[1] // 4, label.shape[0] // 4)), n_classes)).transpose()
-            y2 = _filter_labels(to_categorical(cv2.resize(label, (label.shape[1] // 8, label.shape[0] // 8)), n_classes)).transpose()
-            y3 = _filter_labels(to_categorical(cv2.resize(label, (label.shape[1] // 16, label.shape[0] // 16)), n_classes)).transpose()
+            # y1 = _filter_labels(to_categorical(cv2.resize(label, (label.shape[1] // 4, label.shape[0] // 4)), n_classes)).transpose()
+            # y2 = _filter_labels(to_categorical(cv2.resize(label, (label.shape[1] // 8, label.shape[0] // 8)), n_classes)).transpose()
+            # y3 = _filter_labels(to_categorical(cv2.resize(label, (label.shape[1] // 16, label.shape[0] // 16)), n_classes)).transpose()
+
+            y1 = to_categorical(cv2.resize(label, (label.shape[1] // 4, label.shape[0] // 4)), n_classes)# .transpose()
+            y2 = to_categorical(cv2.resize(label, (label.shape[1] // 8, label.shape[0] // 8)), n_classes)# .transpose()
+            y3 = to_categorical(cv2.resize(label, (label.shape[1] // 16, label.shape[0] // 16)), n_classes)# .transpose()
 
             Y1[j] = y1
             Y2[j] = y2

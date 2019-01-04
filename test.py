@@ -27,18 +27,19 @@ K.set_session(sess)
 
 # Model
 optim = optimizers.SGD(lr=0.01, momentum=0.9)
-net = ICNet(width=512, height=512, n_classes=13, weight_path='./icnet3-v8.h5', training=False)
-net.model.compile(optim, 'categorical_crossentropy', metrics=['categorical_accuracy'])
-
+net = ICNet(width=512, height=512, n_classes=13, weight_path='./icnet3-v13.h5', training=False)
 print(net.model.summary())
+
 # Testing
 x = cv2.resize(cv2.imread("./testing_imgs/test_1.jpg", 1), (512, 512))
 x = cv2.cvtColor(x, cv2.COLOR_BGR2RGB)
 x = np.array([x])
-start_time = time.time()
 y = net.model.predict(x)[0]
+start_time = time.time()
+for i in range(50):
+    y = net.model.predict(x)[0]
 duration = time.time() - start_time
-print('Generated segmentations in %s seconds -- %s FPS' % (duration, 1.0/duration))
+print('Generated segmentations in %s seconds -- %s FPS' % (duration / 50, 1.0/(duration/50)))
 y = cv2.resize(y, (512, 512))
 image = utils.convert_class_to_rgb(y, threshold=0.25)
 plt.figure(1)
