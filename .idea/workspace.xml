@@ -2,15 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f2ac002-8e16-4061-9255-f22003626f8d" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/ICNet/2019-01-03-14-09-49/events.out.tfevents.1546524604.neil-ML" beforeDir="false" afterPath="$PROJECT_DIR$/logs/ICNet/2019-01-03-14-09-49/events.out.tfevents.1546524604.neil-ML" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testing_imgs/da-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/testing_imgs/test_1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/testing_imgs/test_1.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testing_imgs/test_5.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/testing_imgs/test_5.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testing_imgs/test_6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/testing_imgs/test_8.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/testing_imgs/test_9.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/ICNet/2019-01-02-20-08-13/events.out.tfevents.1546459705.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/ICNet/2019-01-02-21-21-45/events.out.tfevents.1546464121.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/ICNet/2019-01-02-22-36-27/events.out.tfevents.1546468600.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/ICNet/2019-01-03-00-48-33/events.out.tfevents.1546476528.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/ICNet/2019-01-03-01-49-06/events.out.tfevents.1546480159.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/ICNet/2019-01-03-02-51-57/events.out.tfevents.1546483931.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/ICNet/2019-01-03-02-52-31/events.out.tfevents.1546483965.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/ICNet/2019-01-03-03-35-29/events.out.tfevents.1546486543.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/ICNet/2019-01-03-04-24-34/events.out.tfevents.1546489488.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/ICNet/2019-01-03-04-48-26/events.out.tfevents.1546490921.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/ICNet/2019-01-03-14-09-49/events.out.tfevents.1546524604.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/ICNet/2019-01-04-04-42-25/events.out.tfevents.1546576959.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/ICNet/2019-01-04-06-55-19/events.out.tfevents.1546584932.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/ICNet/2019-01-04-07-13-51/events.out.tfevents.1546586045.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/ICNet/full/2019-01-04-10-27-03/events.out.tfevents.1546597637.neil-ML" beforeDir="false" afterPath="$PROJECT_DIR$/logs/ICNet/full/2019-01-04-10-27-03/events.out.tfevents.1546597637.neil-ML" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/train_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_v2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
@@ -25,8 +31,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/train_v2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="62" column="69" selection-start-line="62" selection-start-column="69" selection-end-line="62" selection-end-column="69" />
+            <state relative-caret-position="580">
+              <caret line="65" column="96" selection-start-line="65" selection-start-column="96" selection-end-line="65" selection-end-column="96" />
               <folding>
                 <element signature="e#19#52#0" expanded="true" />
               </folding>
@@ -35,10 +41,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/icnet.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1881">
+              <caret line="223" column="8" selection-start-line="223" selection-start-column="8" selection-end-line="223" selection-end-column="8" />
+              <folding>
+                <element signature="e#187#222#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="78">
-              <caret line="166" selection-start-line="166" selection-end-line="166" />
+            <state relative-caret-position="309">
+              <caret line="121" column="14" selection-start-line="121" selection-start-column="14" selection-end-line="121" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -120,6 +138,12 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/weights" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -186,12 +210,12 @@
       <workItem from="1546439967991" duration="6975000" />
       <workItem from="1546476466430" duration="8231000" />
       <workItem from="1546576864158" duration="4072000" />
-      <workItem from="1546595109831" duration="679000" />
+      <workItem from="1546595109831" duration="7586000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="94228000" />
+    <option name="totallyTimeSpent" value="101135000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -204,7 +228,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="57" y="27" width="1543" height="873" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.249165" />
       <window_info id="Favorites" order="1" side_tool="true" />
@@ -217,7 +240,7 @@
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.499666" weight="0.32972974" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49833" visible="true" weight="0.3391892" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49833" weight="0.3391892" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50167" side_tool="true" weight="0.47297296" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.32972974" />
@@ -337,16 +360,6 @@
     <entry file="file://$PROJECT_DIR$/testing_imgs/test_1.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/icnet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1">
-          <caret line="201" column="46" selection-start-line="201" selection-start-column="46" selection-end-line="201" selection-end-column="46" />
-          <folding>
-            <element signature="e#187#222#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
@@ -380,17 +393,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/models/icnet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1881">
+          <caret line="223" column="8" selection-start-line="223" selection-start-column="8" selection-end-line="223" selection-end-column="8" />
+          <folding>
+            <element signature="e#187#222#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="166" selection-start-line="166" selection-end-line="166" />
+        <state relative-caret-position="309">
+          <caret line="121" column="14" selection-start-line="121" selection-start-column="14" selection-end-line="121" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/train_v2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="62" column="69" selection-start-line="62" selection-start-column="69" selection-end-line="62" selection-end-column="69" />
+        <state relative-caret-position="580">
+          <caret line="65" column="96" selection-start-line="65" selection-start-column="96" selection-end-line="65" selection-end-column="96" />
           <folding>
             <element signature="e#19#52#0" expanded="true" />
           </folding>

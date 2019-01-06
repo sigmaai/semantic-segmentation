@@ -21,7 +21,7 @@ import configs
 ## Parameters:
 
 batch_size = 3
-epochs = 20
+epochs = 25
 
 #### Train ####
 
@@ -32,35 +32,35 @@ sess = tf.Session(config=config)
 K.set_session(sess)
 
 # Callbacks
-checkpoint = ModelCheckpoint('output/weights.{epoch:03d}-{val_conv6_cls_categorical_accuracy:.3f}.h5', mode='max')
-tensorboard = TensorBoard(batch_size=batch_size, log_dir="./logs/ICNet/full/{}/".format(strftime("%Y-%m-%d-%H-%M-%S", gmtime())))
+checkpoint = ModelCheckpoint('output/icnet_large_full_{epoch:03d}_{categorical_accuracy:.3f}.h5', mode='max')
+tensorboard = TensorBoard(batch_size=batch_size, log_dir="./logs/ICNet/large_full/{}/".format(strftime("%Y-%m-%d-%H-%M-%S", gmtime())))
 lr_decay = LearningRateScheduler(PolyDecay(0.01, 0.9, epochs).scheduler)
 
 # Generators
 train_generator = utils.generator(df=utils.load_data(), batch_size=batch_size,
-                                  resize_shape=(512, 512), n_classes=34, training=True, crop_shape=(512, 512))
+                                  resize_shape=(1024, 512), n_classes=34, training=False, crop_shape=(1024, 512))
 
 # image, label = next(train_generator)
 # img = np.array(image[0,:,:,:], dtype=np.float32)
-# label = cv2.resize(label[0], (512, 512))
+# label = cv2.resize(label[0], (1024, 512))
+# print label.shape
+# print img.shape
 # plt.figure(1)
 # plt.subplot(1, 2, 1)
 # plt.imshow(img / 255)
 # plt.subplot(1, 2, 2)
-# plt.imshow(utils.convert_class_to_rgb(label))
+# plt.imshow(label[:, :, 7], cmap='gray') # utils.convert_class_to_rgb(utils._filter_labels(label))
 # plt.show()
 
 # Optimizer
 optim = optimizers.SGD(lr=0.01, momentum=0.9)
 
 # Model
-net = ICNet(width=512, height=512, n_classes=34, weight_path=None, training=False)
-print(net.model.summary())
+net = ICNet(width=1024, height=512, n_classes=34, weight_path="./output/icnet_large_full_020_0.800.h5", training=False)
+# print(net.model.summary())
 # Training
 
-net.model.load_weights("icnet_full-v2.h5")
 net.model.compile(optim, 'categorical_crossentropy', metrics=['categorical_accuracy'])
-net.model.fit_generator(generator=train_generator, steps_per_epoch=1500, epochs=epochs, callbacks=[tensorboard, lr_decay],
-                        shuffle=True, max_queue_size=5, use_multiprocessing=True, workers=12)
-
-net.model.save("icnet_full-v3.h5")
+net.model.fit_generator(generator=train_generator, steps_per_epoch=1000, epochs=epochs,
+                        callbacks=[checkpoint, tensorboard, lr_decay], shuffle=True,
+                        max_queue_size=5, use_multiprocessing=True, workers=12, initial_epoch=20)

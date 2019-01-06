@@ -78,7 +78,7 @@ def convert_class_to_rgb(image_labels, threshold=0.25):
     # convert any pixel < threshold to 0
     # then use bitwise_and
 
-    output = np.zeros((configs.img_height, configs.img_width, 3), dtype=np.uint8)
+    output = np.zeros((configs.img_height, 1024, 3), dtype=np.uint8)
 
     for i in range(len(labels)):
 
@@ -88,7 +88,7 @@ def convert_class_to_rgb(image_labels, threshold=0.25):
         split[:] *= 255
         split = split.astype(np.uint8)
 
-        bg = np.zeros((configs.img_height, configs.img_width, 3), dtype=np.uint8)
+        bg = np.zeros((configs.img_height, 2014, 3), dtype=np.uint8)
         bg[:, :, 0].fill(labels[i][2][0])
         bg[:, :, 1].fill(labels[i][2][1])
         bg[:, :, 2].fill(labels[i][2][2])
@@ -105,8 +105,6 @@ def generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, hor
 
     X = np.zeros((batch_size, crop_shape[1], crop_shape[0], 3), dtype='float32')
     Y1 = np.zeros((batch_size, crop_shape[1] // 4, crop_shape[0] // 4, n_classes), dtype='float32')
-    Y2 = np.zeros((batch_size, crop_shape[1] // 8, crop_shape[0] // 8, n_classes), dtype='float32')
-    Y3 = np.zeros((batch_size, crop_shape[1] // 16, crop_shape[0] // 16, n_classes), dtype='float32')
 
     while 1:
         j = 0
@@ -121,7 +119,7 @@ def generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, hor
 
             # TODO: fix this stupid patch.
             # must rotate label...
-            label = cv2.rotate(label, cv2.ROTATE_90_COUNTERCLOCKWISE)
+            # label = cv2.rotate(label, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
             if resize_shape:
                 image = cv2.resize(image, resize_shape)
@@ -162,23 +160,17 @@ def generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, hor
 
             # only keep the useful classes
             # y1 = _filter_labels(to_categorical(cv2.resize(label, (label.shape[1] // 4, label.shape[0] // 4)), n_classes)).transpose()
-            # y2 = _filter_labels(to_categorical(cv2.resize(label, (label.shape[1] // 8, label.shape[0] // 8)), n_classes)).transpose()
-            # y3 = _filter_labels(to_categorical(cv2.resize(label, (label.shape[1] // 16, label.shape[0] // 16)), n_classes)).transpose()
 
             y1 = to_categorical(cv2.resize(label, (label.shape[1] // 4, label.shape[0] // 4)), n_classes)# .transpose()
-            y2 = to_categorical(cv2.resize(label, (label.shape[1] // 8, label.shape[0] // 8)), n_classes)# .transpose()
-            y3 = to_categorical(cv2.resize(label, (label.shape[1] // 16, label.shape[0] // 16)), n_classes)# .transpose()
 
             Y1[j] = y1
-            Y2[j] = y2
-            Y3[j] = y3
 
             j += 1
             if j == batch_size:
                 break
 
         yield X, Y1
-        # yield X, [Y1, Y2, Y3]
+
 
 ##############################################################
 ################ City Scape Generator ########################
