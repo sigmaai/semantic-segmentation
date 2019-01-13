@@ -72,7 +72,7 @@ def load_image(path):
     return img
 
 
-def convert_class_to_rgb(image_labels, threshold=0.25):
+def convert_class_to_rgb(image_labels, threshold=0.80):
 
     # convert any pixel > threshold to 1
     # convert any pixel < threshold to 0
@@ -88,7 +88,7 @@ def convert_class_to_rgb(image_labels, threshold=0.25):
         split[:] *= 255
         split = split.astype(np.uint8)
 
-        bg = np.zeros((configs.img_height, 2014, 3), dtype=np.uint8)
+        bg = np.zeros((configs.img_height, 1024, 3), dtype=np.uint8)
         bg[:, :, 0].fill(labels[i][2][0])
         bg[:, :, 1].fill(labels[i][2][1])
         bg[:, :, 2].fill(labels[i][2][2])
@@ -99,9 +99,10 @@ def convert_class_to_rgb(image_labels, threshold=0.25):
 
     return output
 
+
 # The new training generator
-def generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, horizontal_flip=False,
-                    vertical_flip=False, brightness=0.1, rotation=0.0, zoom=0.0, training=True):
+def generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, horizontal_flip=True,
+                    vertical_flip=False, brightness=0.1, rotation=5.0, zoom=0.1, training=True):
 
     X = np.zeros((batch_size, crop_shape[1], crop_shape[0], 3), dtype='float32')
     Y1 = np.zeros((batch_size, crop_shape[1] // 4, crop_shape[0] // 4, n_classes), dtype='float32')
@@ -116,10 +117,6 @@ def generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, hor
             image = cv2.imread(image_path, 1)
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             label = cv2.imread(label_path, 0)
-
-            # TODO: fix this stupid patch.
-            # must rotate label...
-            # label = cv2.rotate(label, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
             if resize_shape:
                 image = cv2.resize(image, resize_shape)
@@ -370,7 +367,7 @@ def _random_crop(image, label, crop_shape):
         raise Exception('Crop shape exceeds image dimensions!')
 
 
-def load_data():
+def load_train_data():
 
     labels = pandas.read_csv(configs.labelid_path).values
     df = []
@@ -384,6 +381,23 @@ def load_data():
     print("data frame size: " + str(count))
 
     return df
+
+
+def load_val_data():
+
+    labels = pandas.read_csv(configs.labelid_path).values
+    df = []
+    count = 0
+    for row in labels:
+        if os.path.isfile(row[0]) and os.path.isfile(row[1]):
+            count = count + 1
+            df.append(row)
+
+    print("data processing finished")
+    print("data frame size: " + str(count))
+
+    return df
+
 
 def _load_data(csv_path):
 

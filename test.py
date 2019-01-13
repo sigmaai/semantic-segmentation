@@ -27,7 +27,7 @@ K.set_session(sess)
 
 # Model
 optim = optimizers.SGD(lr=0.01, momentum=0.9)
-net = ICNet(width=512, height=512, n_classes=13, weight_path='./icnet3-v13.h5', training=False)
+net = ICNet(width=512, height=512, n_classes=13, weight_path='./weights/icnet3-v13.h5', training=False)
 print(net.model.summary())
 
 # Testing
