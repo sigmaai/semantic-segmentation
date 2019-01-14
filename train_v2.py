@@ -20,7 +20,7 @@ import configs
 ## Parameters:
 
 batch_size = 3
-epochs = 30
+epochs = 40
 
 #### Train ####
 
@@ -58,11 +58,10 @@ val_generator = utils.generator(df=utils._load_data(configs.val_label_path), bat
 optim = optimizers.SGD(lr=0.01, momentum=0.9)
 
 # Model
-net = ICNet(width=2048, height=1024, n_classes=34, weight_path="./output/icnet_super_large_full_015_0.760.h5", training=False)
+net = ICNet(width=2048, height=1024, n_classes=34, weight_path="./output/icnet_super_large_full_030_0.791.h5", training=False)
 
 # Training
-
 net.model.compile(optim, 'categorical_crossentropy', metrics=['categorical_accuracy'])
 net.model.fit_generator(generator=train_generator, steps_per_epoch=1500, epochs=epochs,
                         callbacks=[checkpoint, tensorboard, lr_decay], shuffle=True,
-                        max_queue_size=5, use_multiprocessing=True, workers=12, initial_epoch=15)
+                        max_queue_size=5, use_multiprocessing=True, workers=12, initial_epoch=30)

@@ -5,8 +5,8 @@
 #
 
 batch_size = 8
-img_height = 512
-img_width = 512
+img_height = 1024
+img_width = 2048
 learning_rate = 1e-4
 
 test_results = False
