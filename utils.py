@@ -1,4 +1,4 @@
-# 
+#
 # utilities for semantic segmentation
 # autonomous golf cart project
 # (c) Yongyang Nie, Michael Meng
@@ -23,38 +23,38 @@ from keras.utils.data_utils import Sequence
 Label = namedtuple( 'Label' , [
 
     'name'        , # The identifier of this label, e.g. 'car', 'person', ... .
-                    # We use them to uniquely name a class
+    # We use them to uniquely name a class
 
     'id'          , # An integer ID that is associated with this label.
-                    # The IDs are used to represent the label in ground truth images
-                    # An ID of -1 means that this label does not have an ID and thus
-                    # is ignored when creating ground truth images (e.g. license plate).
-                    # Do not modify these IDs, since exactly these IDs are expected by the
-                    # evaluation server.
+    # The IDs are used to represent the label in ground truth images
+    # An ID of -1 means that this label does not have an ID and thus
+    # is ignored when creating ground truth images (e.g. license plate).
+    # Do not modify these IDs, since exactly these IDs are expected by the
+    # evaluation server.
 
     'trainId'     , # Feel free to modify these IDs as suitable for your method. Then create
-                    # ground truth images with train IDs, using the tools provided in the
-                    # 'preparation' folder. However, make sure to validate or submit results
-                    # to our evaluation server using the regular IDs above!
-                    # For trainIds, multiple labels might have the same ID. Then, these labels
-                    # are mapped to the same class in the ground truth images. For the inverse
-                    # mapping, we use the label that is defined first in the list below.
-                    # For example, mapping all void-type classes to the same ID in training,
-                    # might make sense for some approaches.
-                    # Max value is 255!
+    # ground truth images with train IDs, using the tools provided in the
+    # 'preparation' folder. However, make sure to validate or submit results
+    # to our evaluation server using the regular IDs above!
+    # For trainIds, multiple labels might have the same ID. Then, these labels
+    # are mapped to the same class in the ground truth images. For the inverse
+    # mapping, we use the label that is defined first in the list below.
+    # For example, mapping all void-type classes to the same ID in training,
+    # might make sense for some approaches.
+    # Max value is 255!
 
     'category'    , # The name of the category that this label belongs to
 
     'categoryId'  , # The ID of this category. Used to create ground truth images
-                    # on category level.
+    # on category level.
 
     'hasInstances', # Whether this label distinguishes between single instances or not
 
     'ignoreInEval', # Whether pixels having this class as ground truth label are ignored
-                    # during evaluations or not
+    # during evaluations or not
 
     'color'       , # The color of this label
-    ] )
+] )
 
 
 #--------------------------------------------------------------------------------
@@ -155,7 +155,7 @@ def convert_class_to_rgb(image_labels, threshold=0.80):
 
 # The new training generator
 def generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, horizontal_flip=True,
-                    vertical_flip=False, brightness=0.1, rotation=5.0, zoom=0.1, training=True):
+              vertical_flip=False, brightness=0.1, rotation=5.0, zoom=0.1, training=True):
 
     X = np.zeros((batch_size, crop_shape[1], crop_shape[0], 3), dtype='float32')
     Y1 = np.zeros((batch_size, crop_shape[1] // 4, crop_shape[0] // 4, n_classes), dtype='float32')
@@ -436,9 +436,9 @@ def load_train_data():
     return df
 
 
-def load_val_data():
+def load_val_data(cv_path):
 
-    labels = pandas.read_csv(configs.labelid_path).values
+    labels = pandas.read_csv(cv_path).values
     df = []
     count = 0
     for row in labels:

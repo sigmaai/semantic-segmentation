@@ -23,11 +23,11 @@ config.gpu_options.per_process_gpu_memory_fraction = 0.33
 set_session(tf.Session(config=config))
 
 # Model
-net = ICNet(width=2048, height=1024, n_classes=34, weight_path="./output/icnet_super_large_full_040_0.794.h5", training=False)
+net = ICNet(width=configs.img_width, height=configs.img_height, n_classes=34, weight_path="./output/icnet_large_full_040_0.781.h5", training=False)
 print(net.model.summary())
 
 # Testing
-x = cv2.resize(cv2.imread("./testing_imgs/test_1.jpg", 1), (2048, 1024))
+x = cv2.resize(cv2.imread("./testing_imgs/test_1.jpg", 1), (configs.img_width, configs.img_height))
 x = cv2.cvtColor(x, cv2.COLOR_BGR2RGB)
 
 mid = cv2.resize(x, (configs.img_width / 2, configs.img_height / 2))
@@ -47,3 +47,4 @@ plt.figure(1)
 plt.imshow(viz)
 plt.show()
 
+cv2.imwrite('seg_result_overlay.png', cv2.cvtColor(viz, cv2.COLOR_RGB2BGR))
