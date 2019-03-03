@@ -14,9 +14,9 @@ import configs
 
 ## Parameters:
 
-batch_size = 5
-epochs = 40
-model_type = "large_full"
+batch_size = 6
+epochs = 25
+model_type = "large_full_2"
 
 #### Train ####
 
@@ -46,7 +46,7 @@ optim = optimizers.SGD(lr=0.01, momentum=0.9)
 
 # Model
 net = ICNet(width=configs.img_width, height=configs.img_height, n_classes=34,
-            weight_path="./output/icnet_large_full_030_0.774.h5", training=False)
+            weight_path='output/icnet_large_full_2_009_0.787.h5', training=False)
 
 # Training
 net.model.compile(optim, 'categorical_crossentropy', metrics=['categorical_accuracy'])
@@ -56,4 +56,4 @@ net.model.fit_generator(# training
                         validation_data=val_generator, validation_steps=500,
                         # callbacks & others
                         callbacks=[checkpoint, tensorboard, lr_decay], shuffle=True,
-                        max_queue_size=5, use_multiprocessing=True, workers=12, initial_epoch=30)
+                        max_queue_size=5, use_multiprocessing=True, workers=12, initial_epoch=10)

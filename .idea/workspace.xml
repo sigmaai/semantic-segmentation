@@ -2,23 +2,40 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f2ac002-8e16-4061-9255-f22003626f8d" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/logs/ICNet/large_full_2/2019-02-04-18-50-13/events.out.tfevents.1549306230.neil-ML" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/ICNet/large_full_2/2019-02-04-19-31-58/events.out.tfevents.1549308735.neil-ML" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/ICNet/square_full/2019-02-01-20-58-12/events.out.tfevents.1549054707.neil-ML" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/ICNet/square_full/2019-02-01-22-55-26/events.out.tfevents.1549061742.neil-ML" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/ICNet/square_full/2019-02-02-00-57-48/events.out.tfevents.1549069083.neil-ML" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/average_gradients.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/bilinear_sampler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/monodepth_dataloader.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/monodepth_main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/monodepth_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/utils/evaluate_kitti.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/utils/evaluation_utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/utils/filenames/cityscapes_test_files.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/utils/filenames/cityscapes_train_files.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/utils/filenames/cityscapes_val_files.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/utils/filenames/eigen_test_files.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/utils/filenames/eigen_train_files.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/utils/filenames/eigen_val_files.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/utils/filenames/kitti_stereo_2015_test_files.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/utils/filenames/kitti_test_files.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/utils/filenames/kitti_train_files.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/utils/filenames/kitti_val_files.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/utils/get_model.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/monodepth/utils/kitti_archives_to_download.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testing_imgs/10.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/ICNet/small_partial/2019-01-02-20-08-13/events.out.tfevents.1546459705.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/ICNet/small_partial/2019-01-02-21-21-45/events.out.tfevents.1546464121.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/ICNet/small_partial/2019-01-02-22-36-27/events.out.tfevents.1546468600.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/ICNet/small_partial/2019-01-03-00-48-33/events.out.tfevents.1546476528.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/ICNet/small_partial/2019-01-03-01-49-06/events.out.tfevents.1546480159.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/ICNet/small_partial/2019-01-03-02-51-57/events.out.tfevents.1546483931.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/ICNet/small_partial/2019-01-03-02-52-31/events.out.tfevents.1546483965.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/ICNet/small_partial/2019-01-03-03-35-29/events.out.tfevents.1546486543.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/ICNet/small_partial/2019-01-03-04-24-34/events.out.tfevents.1546489488.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/ICNet/small_partial/2019-01-03-04-48-26/events.out.tfevents.1546490921.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/ICNet/small_partial/2019-01-03-14-09-49/events.out.tfevents.1546524604.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/ICNet/small_partial/2019-01-04-04-42-25/events.out.tfevents.1546576959.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/ICNet/small_partial/2019-01-04-06-55-19/events.out.tfevents.1546584932.neil-ML" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/ICNet/small_partial/2019-01-04-07-13-51/events.out.tfevents.1546586045.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/monodepth/monodepth_simple.py" beforeDir="false" afterPath="$PROJECT_DIR$/monodepth/monodepth_simple.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monodepth/readme.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testing_imgs/test_5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/train_v2.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_v2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
@@ -31,43 +48,25 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train_v2.py">
+        <entry file="file://$PROJECT_DIR$/models/icnet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="37" column="17" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="17" />
+            <state relative-caret-position="15">
+              <caret line="25" selection-start-line="25" selection-end-line="25" />
               <folding>
-                <element signature="e#19#52#0" expanded="true" />
+                <element signature="e#187#222#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test.py">
+        <entry file="file://$PROJECT_DIR$/monodepth/monodepth_dataloader.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="554">
-              <caret line="40" column="93" lean-forward="true" selection-start-line="40" selection-start-column="93" selection-end-line="40" selection-end-column="93" />
+            <state relative-caret-position="180">
+              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
               <folding>
-                <element signature="e#19#34#0" expanded="true" />
+                <element signature="e#405#469#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/configs.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1224">
-              <caret line="156" column="25" selection-start-line="156" selection-start-column="25" selection-end-line="156" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -85,10 +84,11 @@
     <findStrings>
       <find>conv6_cls</find>
       <find>conv5_3_sum</find>
+      <find>exit</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/monodepth" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -97,14 +97,17 @@
         <option value="$PROJECT_DIR$/models/enet_naive_upsampling/model.py" />
         <option value="$PROJECT_DIR$/models/icnet/model.py" />
         <option value="$PROJECT_DIR$/train.py" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/models/icnet.py" />
         <option value="$PROJECT_DIR$/test_v2.py" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/configs.py" />
         <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/train_v2.py" />
+        <option value="$PROJECT_DIR$/configs.py" />
         <option value="$PROJECT_DIR$/test.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/monodepth/monodepth_simple.py" />
+        <option value="$PROJECT_DIR$/monodepth/__init__.py" />
+        <option value="$PROJECT_DIR$/monodepth/monodepth_model.py" />
       </list>
     </option>
   </component>
@@ -114,11 +117,13 @@
     <option name="width" value="1459" />
     <option name="height" value="852" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -130,7 +135,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -226,11 +230,16 @@
       <workItem from="1548985605169" duration="302000" />
       <workItem from="1548985973390" duration="51000" />
       <workItem from="1549037346732" duration="6486000" />
+      <workItem from="1549050704922" duration="222000" />
+      <workItem from="1549053424149" duration="11357000" />
+      <workItem from="1549306090931" duration="4608000" />
+      <workItem from="1549814683191" duration="588000" />
+      <workItem from="1551578891850" duration="327000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="130553000" />
+    <option name="totallyTimeSpent" value="147655000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -244,7 +253,7 @@
   <component name="ToolWindowManager">
     <frame x="57" y="27" width="1543" height="873" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20307282" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21643287" />
       <window_info id="Favorites" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32972974" />
@@ -255,7 +264,7 @@
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.499666" weight="0.32972974" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49833" visible="true" weight="0.3391892" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49833" weight="0.33783785" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50167" side_tool="true" weight="0.47297296" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.32972974" />
@@ -268,6 +277,31 @@
       <window_info anchor="right" id="Database" order="5" />
       <window_info anchor="right" x="0" y="0" width="335" height="673" id="Documentation" order="6" side_tool="true" weight="0.3299933" />
     </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20841683" />
+      <window_info id="Favorites" order="1" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32972974" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.499666" weight="0.32972974" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" sideWeight="0.49833" visible="true" weight="0.3391892" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50167" side_tool="true" weight="0.47297296" />
+      <window_info anchor="bottom" id="Version Control" order="11" />
+      <window_info anchor="bottom" id="Python Console" order="12" weight="0.32972974" />
+      <window_info anchor="bottom" id="Thumbnails" order="13" weight="0.32972974" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Structure" order="3" weight="0.21910487" />
+      <window_info anchor="right" id="SciView" order="4" />
+      <window_info anchor="right" id="Database" order="5" />
+      <window_info anchor="right" x="0" y="0" width="335" height="673" id="Documentation" order="6" side_tool="true" weight="0.3299933" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -327,13 +361,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/testing_imgs/test_9.jpg" />
     <entry file="file://$PROJECT_DIR$/testing_imgs/test_8.jpg" />
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="9" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/lib/python2.7/dist-packages/keras/engine/training.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
@@ -394,16 +421,61 @@
     <entry file="file://$PROJECT_DIR$/testing_imgs/test_0.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/configs.py">
+    <entry file="file:///usr/local/lib/python2.7/dist-packages/tensorflow/python/client/session.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="674" selection-start-line="674" selection-end-line="674" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/seg_result_overlay.png" />
+    <entry file="file://$PROJECT_DIR$/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2145">
+          <caret line="156" column="4" selection-start-line="156" selection-start-column="4" selection-end-line="156" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
+          <caret line="5" column="16" lean-forward="true" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/monodepth/monodepth_main.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/monodepth/monodepth_simple.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="565">
+          <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
+          <folding>
+            <element signature="e#19#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_v2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="29" column="21" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
+          <folding>
+            <element signature="e#19#52#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/models/icnet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
+        <state relative-caret-position="15">
           <caret line="25" selection-start-line="25" selection-end-line="25" />
           <folding>
             <element signature="e#187#222#0" expanded="true" />
@@ -411,29 +483,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils.py">
+    <entry file="file://$PROJECT_DIR$/configs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1224">
-          <caret line="156" column="25" selection-start-line="156" selection-start-column="25" selection-end-line="156" selection-end-column="25" />
+        <state relative-caret-position="105">
+          <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_v2.py">
+    <entry file="file://$PROJECT_DIR$/monodepth/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/monodepth/monodepth_model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="37" column="17" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="17" />
-          <folding>
-            <element signature="e#19#52#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="300">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
+    <entry file="file://$PROJECT_DIR$/monodepth/monodepth_dataloader.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="554">
-          <caret line="40" column="93" lean-forward="true" selection-start-line="40" selection-start-column="93" selection-end-line="40" selection-end-column="93" />
+        <state relative-caret-position="180">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
           <folding>
-            <element signature="e#19#34#0" expanded="true" />
+            <element signature="e#405#469#0" expanded="true" />
           </folding>
         </state>
       </provider>

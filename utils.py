@@ -142,9 +142,9 @@ def convert_class_to_rgb(image_labels, threshold=0.80):
         split = split.astype(np.uint8)
 
         bg = np.zeros((configs.img_height / 2, configs.img_width / 2, 3), dtype=np.uint8)
-        bg[:, :, 0].fill(labels[i][7][0])
+        bg[:, :, 0].fill(labels[i][7][2])
         bg[:, :, 1].fill(labels[i][7][1])
-        bg[:, :, 2].fill(labels[i][7][2])
+        bg[:, :, 2].fill(labels[i][7][0])
 
         res = cv2.bitwise_and(bg, bg, mask=split)
 
