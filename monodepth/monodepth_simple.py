@@ -20,7 +20,7 @@ import tensorflow as tf
 import tensorflow.contrib.slim as slim
 import scipy.misc
 import matplotlib.pyplot as plt
-
+import numpy as np
 from monodepth_model import *
 from monodepth_dataloader import *
 from average_gradients import *

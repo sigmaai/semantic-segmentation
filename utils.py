@@ -154,6 +154,75 @@ def convert_class_to_rgb(image_labels, threshold=0.80):
 
 
 # The new training generator
+def early_fusion_generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, horizontal_flip=True,
+                           vertical_flip=False, brightness=0.1, rotation=5.0, zoom=0.1, training=True):
+
+    X = np.zeros((batch_size, crop_shape[1], crop_shape[0], 6), dtype='float32')
+    Y1 = np.zeros((batch_size, crop_shape[1] // 4, crop_shape[0] // 4, n_classes), dtype='float32')
+
+    while 1:
+        j = 0
+
+        for index in np.random.permutation(len(df)):
+
+            image_path = df[index][0]
+            depth_image_path = df[index][2]
+            label_path = df[index][1]
+            image = cv2.imread(image_path, 1)
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            image_depth = cv2.imread(depth_image_path, 1)
+            image_depth = cv2.cvtColor(image_depth, cv2.COLOR_BGR2RGB)
+            label = cv2.imread(label_path, 0)
+
+            if resize_shape:
+                image = cv2.resize(image, resize_shape)
+                image_depth = cv2.resize(image_depth, resize_shape)
+                label = cv2.resize(label, resize_shape)
+
+            # Do augmentation (only if training)
+            if training:
+                if horizontal_flip and random.randint(0, 1):
+                    image = cv2.flip(image, 1)
+                    label = cv2.flip(label, 1)
+                if vertical_flip and random.randint(0, 1):
+                    image = cv2.flip(image, 0)
+                    label = cv2.flip(label, 0)
+                if brightness and random.randint(0, 1):
+                    factor = 1.0 + abs(random.gauss(mu=0.0, sigma=brightness))
+                    if random.randint(0, 1):
+                        factor = 1.0 / factor
+                    table = np.array([((i / 255.0) ** factor) * 255 for i in np.arange(0, 256)]).astype(np.uint8)
+                    image = cv2.LUT(image, table)
+
+                # get rotation or zoom
+                if rotation and random.randint(0, 1):
+                    angle = random.gauss(mu=0.0, sigma=rotation)
+                else:
+                    angle = 0.0
+                if zoom and random.randint(0, 1):
+                    scale = random.gauss(mu=1.0, sigma=zoom)
+                else:
+                    scale = 1.0
+
+                # perform rotation or zoom
+                if rotation or zoom:
+                    M = cv2.getRotationMatrix2D((image.shape[1] // 2, image.shape[0] // 2), angle, scale)
+                    image = cv2.warpAffine(image, M, (image.shape[1], image.shape[0]))
+                    label = cv2.warpAffine(label, M, (label.shape[1], label.shape[0]))
+
+            X[j] = np.concatenate((image, image_depth), axis=2)
+            y1 = to_categorical(cv2.resize(label, (label.shape[1] // 4, label.shape[0] // 4)), n_classes)# .transpose()
+
+            Y1[j] = y1
+
+            j += 1
+            if j == batch_size:
+                break
+
+        yield X, Y1
+
+
+# The new training generator
 def generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, horizontal_flip=True,
               vertical_flip=False, brightness=0.1, rotation=5.0, zoom=0.1, training=True):
 
@@ -420,9 +489,9 @@ def _random_crop(image, label, crop_shape):
         raise Exception('Crop shape exceeds image dimensions!')
 
 
-def load_train_data():
+def load_train_data(cv_path):
 
-    labels = pandas.read_csv(configs.labelid_path).values
+    labels = pandas.read_csv(cv_path).values
     df = []
     count = 0
     for row in labels:

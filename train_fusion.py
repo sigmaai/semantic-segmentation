@@ -9,13 +9,13 @@ from keras.callbacks import LearningRateScheduler
 
 import utils
 from utils import PolyDecay
-from models.icnet import ICNet
+from models.icnet_fusion import ICNet
 import configs
 
 ## Parameters:
 
-batch_size = 6
-epochs = 25
+batch_size = 3
+epochs = 50
 model_type = "early_fusion"
 
 #### Train ####
@@ -26,33 +26,30 @@ tensorboard = TensorBoard(batch_size=batch_size, log_dir="./logs/ICNet/" + model
 lr_decay = LearningRateScheduler(PolyDecay(0.01, 0.9, epochs).scheduler)
 
 # Generators
-train_generator = utils.generator(df=utils.load_train_data(),
-                                  batch_size=batch_size,
-                                  resize_shape=(configs.img_width, configs.img_height),
-                                  crop_shape=(configs.img_width, configs.img_height),
-                                  n_classes=34,
-                                  training=True)
+train_generator = utils.early_fusion_generator(df=utils.load_train_data(configs.label_depth_color_path),
+                                               batch_size=batch_size,
+                                               resize_shape=(configs.img_width, configs.img_height),
+                                               crop_shape=(configs.img_width, configs.img_height),
+                                               n_classes=34,
+                                               training=True)
 
-val_generator = utils.generator(df=utils.load_val_data(configs.val_label_path), batch_size=1,
-                                resize_shape=(configs.img_width, configs.img_height),
-                                crop_shape=(configs.img_width, configs.img_height),
-                                n_classes=34,
-                                training=False)
+val_generator = utils.early_fusion_generator(df=utils.load_val_data(configs.val_depth_color_path), batch_size=1,
+                                            resize_shape=(configs.img_width, configs.img_height),
+                                            crop_shape=(configs.img_width, configs.img_height),
+                                            n_classes=34,
+                                            training=False)
 
 
 # Optimizer
 optim = optimizers.SGD(lr=0.01, momentum=0.9)
 
 # Model
-net = ICNet(width=configs.img_width, height=configs.img_height, n_classes=34,
-            weight_path='output/icnet_' + model_type + '_009_0.787.h5', training=False)
+net = ICNet(width=configs.img_width, height=configs.img_height, n_classes=34, depth=6,
+            weight_path='output/icnet_' + model_type + '_040_0.834.h5')
 
 # Training
 net.model.compile(optim, 'categorical_crossentropy', metrics=['categorical_accuracy'])
-net.model.fit_generator(# training
-                        generator=train_generator, steps_per_epoch=1500, epochs=epochs,
-                        # validation
-                        validation_data=val_generator, validation_steps=500,
-                        # callbacks & others
+net.model.fit_generator(generator=train_generator, steps_per_epoch=1500, epochs=epochs,
+                        validation_data=val_generator, validation_steps=800,
                         callbacks=[checkpoint, tensorboard, lr_decay], shuffle=True,
-                        max_queue_size=5, use_multiprocessing=True, workers=12, initial_epoch=10)
+                        max_queue_size=5, use_multiprocessing=True, workers=12, initial_epoch=40)
