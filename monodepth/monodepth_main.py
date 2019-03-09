@@ -20,9 +20,9 @@ import time
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
 
-from monodepth_model import *
-from monodepth_dataloader import *
-from average_gradients import *
+from monodepth.monodepth_model import *
+from monodepth.monodepth_dataloader import *
+from monodepth.average_gradients import *
 
 parser = argparse.ArgumentParser(description='Monodepth TensorFlow implementation.')
 

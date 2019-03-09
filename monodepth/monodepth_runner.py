@@ -13,15 +13,11 @@ from __future__ import absolute_import, division, print_function
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='0'
 
-import time
-import tensorflow as tf
-import tensorflow.contrib.slim as slim
 import scipy.misc
 import matplotlib.pyplot as plt
 import numpy as np
-from monodepth_model import *
-from monodepth_dataloader import *
-from average_gradients import *
+from monodepth.monodepth_model import *
+from monodepth.average_gradients import *
 
 class monodepth_runner:
 
@@ -65,7 +61,8 @@ class monodepth_runner:
         restore_path = self.checkpoint_path.split(".")[0]
         train_saver.restore(self.sess, restore_path)
 
-    def post_process_disparity(self, disp):
+    @staticmethod
+    def post_process_disparity(disp):
         _, h, w = disp.shape
         l_disp = disp[0, :, :]
         r_disp = np.fliplr(disp[1, :, :])
@@ -76,7 +73,7 @@ class monodepth_runner:
 
         return r_mask * l_disp + l_mask * r_disp + (1.0 - l_mask - r_mask) * m_disp
 
-    def test_simple(self, image_path):
+    def run_depth(self, image_path, out_height, out_width):
 
         """Test function."""
         input_image = scipy.misc.imread(image_path, mode="RGB")
@@ -88,11 +85,6 @@ class monodepth_runner:
         disp = self.sess.run(self.model.disp_left_est[0], feed_dict={self.left: input_images})
         disp_pp = self.post_process_disparity(disp.squeeze()).astype(np.float32)
 
-        output_directory = os.path.dirname(image_path)
-        output_name = os.path.splitext(os.path.basename(image_path))[0]
+        disp_to_img = scipy.misc.imresize(disp_pp.squeeze(), [out_height, out_width])
 
-        # np.save(os.path.join(output_directory, "{}_disp.npy".format(output_name)), disp_pp)
-        disp_to_img = scipy.misc.imresize(disp_pp.squeeze(), [original_height, original_width])
-        plt.imsave(os.path.join(output_directory, "{}_disp.png".format(output_name)), disp_to_img, cmap='plasma')
-
-        print('done!')
+        return disp_to_img

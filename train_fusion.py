@@ -14,9 +14,9 @@ import configs
 
 ## Parameters:
 
-batch_size = 3
-epochs = 50
-model_type = "early_fusion"
+batch_size = 5
+epochs = 30
+model_type = "early_fusion_train_2"
 
 #### Train ####
 
@@ -44,12 +44,12 @@ val_generator = utils.early_fusion_generator(df=utils.load_val_data(configs.val_
 optim = optimizers.SGD(lr=0.01, momentum=0.9)
 
 # Model
-net = ICNet(width=configs.img_width, height=configs.img_height, n_classes=34, depth=6,
-            weight_path='output/icnet_' + model_type + '_040_0.834.h5')
+net = ICNet(width=configs.img_width, height=configs.img_height, n_classes=34, depth=6)
+            # weight_path='output/icnet_' + model_type + '_050_0.816.h5')
 
 # Training
 net.model.compile(optim, 'categorical_crossentropy', metrics=['categorical_accuracy'])
 net.model.fit_generator(generator=train_generator, steps_per_epoch=1500, epochs=epochs,
                         validation_data=val_generator, validation_steps=800,
                         callbacks=[checkpoint, tensorboard, lr_decay], shuffle=True,
-                        max_queue_size=5, use_multiprocessing=True, workers=12, initial_epoch=40)
+                        max_queue_size=5, use_multiprocessing=True, workers=12, initial_epoch=0)
