@@ -16,14 +16,12 @@ os.environ['TF_CPP_MIN_LOG_LEVEL']='0'
 
 import argparse
 import time
-import tensorflow as tf
-import tensorflow.contrib.slim as slim
 import scipy.misc
 import matplotlib.pyplot as plt
 import numpy as np
-from monodepth_model import *
-from monodepth_dataloader import *
-from average_gradients import *
+from monodepth.monodepth_model import *
+from monodepth.monodepth_dataloader import *
+from monodepth.average_gradients import *
 
 parser = argparse.ArgumentParser(description='Monodepth TensorFlow implementation.')
 

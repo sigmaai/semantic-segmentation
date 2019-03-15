@@ -18,8 +18,8 @@ import configs
 
 # define global variables
 checkpoint_path = '/home/neil/Workspace/semantic-segmentation/monodepth/models/cityscape/model_cityscapes.data-00000-of-00001'
-model_path = 'icnet_early_fusion_070_0.851.h5'
-test_img_path = "./testing_imgs/da-3.jpg"
+model_path = 'icnet_early_fusion_train_2_030_0.866.h5'
+test_img_path = "./testing_imgs/10.png"
 
 # ==== create monodepth runner ====
 depth_runner = monodepth_runner(checkpoint_path)

@@ -154,25 +154,99 @@ def convert_class_to_rgb(image_labels, threshold=0.80):
 
 
 # The new training generator
-def early_fusion_generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, horizontal_flip=True,
-                           vertical_flip=False, brightness=0.1, rotation=5.0, zoom=0.1, training=True):
 
-    X = np.zeros((batch_size, crop_shape[1], crop_shape[0], 6), dtype='float32')
-    Y1 = np.zeros((batch_size, crop_shape[1] // 4, crop_shape[0] // 4, n_classes), dtype='float32')
+
+def mid_fusion_generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, horizontal_flip=True,
+                         vertical_flip=False, brightness=0.1, rotation=5.0, zoom=0.1, training=True):
+
+    """
+    training generator for mid fusion ICNet
+
+    :param df: the dataframe. provided by the csv
+    :param crop_shape: cropped size of the image.
+    :param n_classes: number of classes to classify
+    :param batch_size: the training batch size. usually default to 5
+    :param resize_shape:
+    :param horizontal_flip: boolean, apply hori flip to image during training.
+    :param vertical_flip: boolean, apply vert flip to image during training
+    :param brightness:
+    :param rotation:
+    :param zoom:
+    :param training: boolean, if yes, apply augmentation
+    :return:
+    """
+
+    X_color = np.zeros((batch_size, crop_shape[1], crop_shape[0], 3), dtype='float32')
+    X_depth = np.zeros((batch_size, crop_shape[1], crop_shape[0], 3), dtype='float32')
+    Y = np.zeros((batch_size, crop_shape[1] // 4, crop_shape[0] // 4, n_classes), dtype='float32')
 
     while 1:
         j = 0
 
         for index in np.random.permutation(len(df)):
 
-            image_path = df[index][0]
-            depth_image_path = df[index][2]
-            label_path = df[index][1]
-            image = cv2.imread(image_path, 1)
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            image_depth = cv2.imread(depth_image_path, 1)
-            image_depth = cv2.cvtColor(image_depth, cv2.COLOR_BGR2RGB)
-            label = cv2.imread(label_path, 0)
+            image, image_depth, label = _load_rgb_depth_image_label(df[index])
+
+            if resize_shape:
+                image = cv2.resize(image, resize_shape)
+                image_depth = cv2.resize(image_depth, resize_shape)
+                label = cv2.resize(label, resize_shape)
+
+            # Do augmentation (only if training)
+            if training:
+                if horizontal_flip and random.randint(0, 1):
+                    image = cv2.flip(image, 1)
+                    label = cv2.flip(label, 1)
+                if vertical_flip and random.randint(0, 1):
+                    image = cv2.flip(image, 0)
+                    label = cv2.flip(label, 0)
+                if brightness and random.randint(0, 1):
+                    factor = 1.0 + abs(random.gauss(mu=0.0, sigma=brightness))
+                    if random.randint(0, 1):
+                        factor = 1.0 / factor
+                    table = np.array([((i / 255.0) ** factor) * 255 for i in np.arange(0, 256)]).astype(np.uint8)
+                    image = cv2.LUT(image, table)
+
+                # get rotation or zoom
+                if rotation and random.randint(0, 1):
+                    angle = random.gauss(mu=0.0, sigma=rotation)
+                else:
+                    angle = 0.0
+                if zoom and random.randint(0, 1):
+                    scale = random.gauss(mu=1.0, sigma=zoom)
+                else:
+                    scale = 1.0
+
+                # perform rotation or zoom
+                if rotation or zoom:
+                    M = cv2.getRotationMatrix2D((image.shape[1] // 2, image.shape[0] // 2), angle, scale)
+                    image = cv2.warpAffine(image, M, (image.shape[1], image.shape[0]))
+                    label = cv2.warpAffine(label, M, (label.shape[1], label.shape[0]))
+
+            X_color[j, :, :, :] = image
+            X_depth[j, :, :, :] = image_depth
+            Y[j] = to_categorical(cv2.resize(label, (label.shape[1] // 4, label.shape[0] // 4)), n_classes)
+
+            j += 1
+            if j == batch_size:
+                break
+
+        yield [X_color, X_depth], Y
+
+
+# The new training generator
+def early_fusion_generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, horizontal_flip=True,
+                           vertical_flip=False, brightness=0.1, rotation=5.0, zoom=0.1, training=True):
+
+    X = np.zeros((batch_size, crop_shape[1], crop_shape[0], 6), dtype='float32')
+    Y = np.zeros((batch_size, crop_shape[1] // 4, crop_shape[0] // 4, n_classes), dtype='float32')
+
+    while 1:
+        j = 0
+
+        for index in np.random.permutation(len(df)):
+
+            image, image_depth, label = _load_rgb_depth_image_label(df[index])
 
             if resize_shape:
                 image = cv2.resize(image, resize_shape)
@@ -211,15 +285,13 @@ def early_fusion_generator(df, crop_shape, n_classes=34, batch_size=1, resize_sh
                     label = cv2.warpAffine(label, M, (label.shape[1], label.shape[0]))
 
             X[j] = np.concatenate((image, image_depth), axis=2)
-            y1 = to_categorical(cv2.resize(label, (label.shape[1] // 4, label.shape[0] // 4)), n_classes)# .transpose()
-
-            Y1[j] = y1
+            Y[j] = to_categorical(cv2.resize(label, (label.shape[1] // 4, label.shape[0] // 4)), n_classes)
 
             j += 1
             if j == batch_size:
                 break
 
-        yield X, Y1
+        yield X, Y
 
 
 # The new training generator
@@ -414,38 +486,6 @@ class CityScapeGenerator(Sequence):
         gc.collect()
 
 
-class Visualization(Callback):
-
-    def __init__(self, resize_shape=(640, 320), batch_steps=10, n_gpu=1, **kwargs):
-        super(Visualization, self).__init__(**kwargs)
-        self.resize_shape = resize_shape
-        self.batch_steps = batch_steps
-        self.n_gpu = n_gpu
-        self.counter = 0
-
-        # TODO: Remove this lazy hardcoded paths
-        self.test_images_list = glob.glob('datasets/mapillary/testing/images/*')
-        with open('datasets/mapillary/config.json') as config_file:
-            config = json.load(config_file)
-        self.labels = config['labels']
-
-    def on_batch_end(self, batch, logs={}):
-        self.counter += 1
-
-        if self.counter == self.batch_steps:
-            self.counter = 0
-
-            test_image = cv2.resize(cv2.imread(random.choice(self.test_images_list), 1), self.resize_shape)
-
-            inputs = [test_image] * self.n_gpu
-            output, _, _ = self.model.predict(np.array(inputs), batch_size=self.n_gpu)
-
-            cv2.imshow('input', test_image)
-            cv2.waitKey(1)
-            cv2.imshow('output', apply_color_map(np.argmax(output[0], axis=-1), self.labels))
-            cv2.waitKey(1)
-
-
 class PolyDecay:
     def __init__(self, initial_lr, power, n_epochs):
         self.initial_lr = initial_lr
@@ -476,17 +516,9 @@ def apply_color_map(image_array, labels):
     return color_array
 
 
-def _random_crop(image, label, crop_shape):
-    if (image.shape[0] != label.shape[0]) or (image.shape[1] != label.shape[1]):
-        raise Exception('Image and label must have the same dimensions!')
-
-    if (crop_shape[0] < image.shape[1]) and (crop_shape[1] < image.shape[0]):
-        x = random.randrange(image.shape[1] - crop_shape[0])
-        y = random.randrange(image.shape[0] - crop_shape[1])
-
-        return image[y:y + crop_shape[1], x:x + crop_shape[0], :], label[y:y + crop_shape[1], x:x + crop_shape[0]]
-    else:
-        raise Exception('Crop shape exceeds image dimensions!')
+# =====================
+# Public Helper Methods
+# =====================
 
 
 def load_train_data(cv_path):
@@ -520,6 +552,42 @@ def load_val_data(cv_path):
 
     return df
 
+# ===============
+# Private methods
+# ===============
+
+
+def _random_crop(image, label, crop_shape):
+    if (image.shape[0] != label.shape[0]) or (image.shape[1] != label.shape[1]):
+        raise Exception('Image and label must have the same dimensions!')
+
+    if (crop_shape[0] < image.shape[1]) and (crop_shape[1] < image.shape[0]):
+        x = random.randrange(image.shape[1] - crop_shape[0])
+        y = random.randrange(image.shape[0] - crop_shape[1])
+
+        return image[y:y + crop_shape[1], x:x + crop_shape[0], :], label[y:y + crop_shape[1], x:x + crop_shape[0]]
+    else:
+        raise Exception('Crop shape exceeds image dimensions!')
+
+
+def _load_rgb_depth_image_label(label_row):
+
+    """
+    private helper method for loading images and labels
+    :param label_row: a row of the label csv file, which contains the path to the images and label.
+    :return: return the rgb image, the depth image, and the label image
+    """
+
+    image_path = label_row[0]
+    depth_image_path = label_row[2]
+    label_path = label_row[1]
+    image = cv2.imread(image_path, 1)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    image_depth = cv2.imread(depth_image_path, 1)
+    image_depth = cv2.cvtColor(image_depth, cv2.COLOR_BGR2RGB)
+    label = cv2.imread(label_path, 0)
+
+    return image, image_depth, label
 
 def _load_data(csv_path):
 
