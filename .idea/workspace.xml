@@ -3,12 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0f2ac002-8e16-4061-9255-f22003626f8d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/ICNet/mid_fusion/2019-03-15-16-53-43/events.out.tfevents.1552668845.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/ICNet/mid_fusion/2019-03-15-16-59-21/events.out.tfevents.1552669183.neil-ML" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/models/icnet_fusion.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/icnet_fusion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monodepth/monodepth_simple.py" beforeDir="false" afterPath="$PROJECT_DIR$/monodepth/monodepth_simple.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/seg_result_overlay.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/test_fusion.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_fusion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testing_imgs/dirt-road.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/testing_imgs/stop-2.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/train_fusion.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_fusion.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
@@ -20,11 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/models/icnet_fusion.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1038">
-              <caret line="44" column="32" selection-start-line="44" selection-start-column="32" selection-end-line="44" selection-end-column="32" />
+            <state relative-caret-position="190">
+              <caret line="187" column="29" selection-start-line="187" selection-start-column="29" selection-end-line="187" selection-end-column="29" />
               <folding>
                 <element signature="e#187#222#0" expanded="true" />
               </folding>
@@ -32,7 +31,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train_fusion.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="270">
@@ -45,10 +44,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils.py">
+        <entry file="file://$PROJECT_DIR$/test_fusion.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="224" selection-start-line="224" selection-end-line="224" />
+            <state relative-caret-position="15">
+              <caret line="37" column="17" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="17" />
+              <folding>
+                <element signature="e#19#34#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -95,17 +97,17 @@
         <option value="$PROJECT_DIR$/monodepth/utils/evaluation_utils.py" />
         <option value="$PROJECT_DIR$/monodepth/monodepth_runner.py" />
         <option value="$PROJECT_DIR$/monodepth/monodepth_simple.py" />
-        <option value="$PROJECT_DIR$/test_fusion.py" />
-        <option value="$PROJECT_DIR$/models/icnet_fusion.py" />
         <option value="$PROJECT_DIR$/utils.py" />
+        <option value="$PROJECT_DIR$/test_fusion.py" />
         <option value="$PROJECT_DIR$/train_fusion.py" />
+        <option value="$PROJECT_DIR$/models/icnet_fusion.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="57" />
+    <option name="x" value="74" />
     <option name="y" value="27" />
-    <option name="width" value="1440" />
+    <option name="width" value="1522" />
     <option name="height" value="873" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -130,7 +132,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../self-driving-golf-cart" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
@@ -235,12 +237,13 @@
       <workItem from="1552156596624" duration="1362000" />
       <workItem from="1552171337246" duration="8278000" />
       <workItem from="1552440887377" duration="2860000" />
-      <workItem from="1552667653088" duration="1969000" />
+      <workItem from="1552667653088" duration="15985000" />
+      <workItem from="1552785292696" duration="2461000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="176156000" />
+    <option name="totallyTimeSpent" value="192633000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -255,7 +258,7 @@
     <frame x="57" y="27" width="1543" height="873" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23112893" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23446894" />
       <window_info id="Favorites" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32972974" />
@@ -314,13 +317,6 @@
     </ignored-roots>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///usr/lib/python2.7/multiprocessing/pool.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8370">
-          <caret line="565" column="23" selection-start-line="565" selection-start-column="23" selection-end-line="565" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/lib/python2.7/dist-packages/keras/legacy/interfaces.py" />
     <entry file="file://$PROJECT_DIR$/debug.py" />
     <entry file="file:///usr/local/lib/python2.7/dist-packages/matplotlib/backends/_backend_tk.py" />
@@ -518,16 +514,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_fusion.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="21" column="38" selection-start-line="21" selection-start-column="38" selection-end-line="21" selection-end-column="38" />
-          <folding>
-            <element signature="e#19#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/lib/python2.7/dist-packages/tensorflow/python/framework/ops.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
@@ -535,19 +521,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/model.png" />
     <entry file="file://$PROJECT_DIR$/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="224" selection-start-line="224" selection-end-line="224" />
+        <state relative-caret-position="-3577">
+          <caret line="352" column="28" lean-forward="true" selection-start-line="352" selection-start-column="28" selection-end-line="352" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/icnet_fusion.py">
+    <entry file="file://$PROJECT_DIR$/test_fusion.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1038">
-          <caret line="44" column="32" selection-start-line="44" selection-start-column="32" selection-end-line="44" selection-end-column="32" />
+        <state relative-caret-position="15">
+          <caret line="37" column="17" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="17" />
           <folding>
-            <element signature="e#187#222#0" expanded="true" />
+            <element signature="e#19#34#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -558,6 +545,16 @@
           <caret line="18" column="10" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="10" />
           <folding>
             <element signature="e#19#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/icnet_fusion.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="187" column="29" selection-start-line="187" selection-start-column="29" selection-end-line="187" selection-end-column="29" />
+          <folding>
+            <element signature="e#187#222#0" expanded="true" />
           </folding>
         </state>
       </provider>

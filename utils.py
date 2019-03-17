@@ -107,15 +107,6 @@ labels = [
 ]
 
 
-def bc_img(img, s = 1.0, m = 0.0):
-    img = img.astype(np.int)
-    img = img * s + m
-    img[img > 255] = 255
-    img[img < 0] = 0
-    img = img.astype(np.uint8)
-    return img
-
-
 def load_image(path):
 
     img = cv2.imread(path)
@@ -242,6 +233,7 @@ def early_fusion_generator(df, crop_shape, n_classes=34, batch_size=1, resize_sh
     Y = np.zeros((batch_size, crop_shape[1] // 4, crop_shape[0] // 4, n_classes), dtype='float32')
 
     while 1:
+
         j = 0
 
         for index in np.random.permutation(len(df)):
@@ -299,7 +291,7 @@ def generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, hor
               vertical_flip=False, brightness=0.1, rotation=5.0, zoom=0.1, training=True):
 
     X = np.zeros((batch_size, crop_shape[1], crop_shape[0], 3), dtype='float32')
-    Y1 = np.zeros((batch_size, crop_shape[1] // 4, crop_shape[0] // 4, n_classes), dtype='float32')
+    Y = np.zeros((batch_size, crop_shape[1] // 4, crop_shape[0] // 4, n_classes), dtype='float32')
 
     while 1:
         j = 0
@@ -348,26 +340,20 @@ def generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, hor
                     label = cv2.warpAffine(label, M, (label.shape[1], label.shape[0]))
 
             X[j] = image
-
-            # only keep the useful classes
-            # y1 = _filter_labels(to_categorical(cv2.resize(label, (label.shape[1] // 4, label.shape[0] // 4)), n_classes)).transpose()
-
-            y1 = to_categorical(cv2.resize(label, (label.shape[1] // 4, label.shape[0] // 4)), n_classes)# .transpose()
-
-            Y1[j] = y1
+            Y[j] = to_categorical(cv2.resize(label, (label.shape[1] // 4, label.shape[0] // 4)), n_classes)
 
             j += 1
             if j == batch_size:
                 break
 
-        yield X, Y1
+        yield X, Y
 
 
 ##############################################################
 ################ City Scape Generator ########################
 ##############################################################
 
-# * Not working currently
+# *** Not working currently ***
 
 class CityScapeGenerator(Sequence):
 

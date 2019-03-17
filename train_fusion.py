@@ -16,8 +16,8 @@ import configs
 # Parameters
 # ==========
 batch_size = 3
-epochs = 5
-model_type = "mid_fusion"
+epochs = 3
+model_type = "cross_fusion"
 
 #### Train ####
 
@@ -43,7 +43,7 @@ if model_type == "early_fusion":
                                                  crop_shape=(configs.img_width, configs.img_height),
                                                  n_classes=34,
                                                  training=False)
-elif model_type == "mid_fusion":
+elif model_type == "mid_fusion" or model_type == "cross_fusion":
     train_generator = utils.mid_fusion_generator(df=utils.load_train_data(configs.label_depth_color_path),
                                                  batch_size=batch_size,
                                                  resize_shape=(configs.img_width, configs.img_height),
@@ -64,7 +64,8 @@ optim = optimizers.SGD(lr=0.01, momentum=0.9)
 
 # Model
 net = ICNet(width=configs.img_width, height=configs.img_height, n_classes=34, depth=6, mode=model_type)
-# weight_path='output/icnet_' + model_type + '_050_0.816.h5')
+            # weight_path='output/icnet_' + model_type + '_020_0.827.h5')
+
 print(net.model.summary())
 
 from keras.utils import plot_model
