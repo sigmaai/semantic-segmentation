@@ -147,11 +147,11 @@ def convert_class_to_rgb(image_labels, threshold=0.80):
 # The new training generator
 
 
-def mid_fusion_generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, horizontal_flip=True,
+def fusion_generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, horizontal_flip=True,
                          vertical_flip=False, brightness=0.1, rotation=5.0, zoom=0.1, training=True):
 
     """
-    training generator for mid fusion ICNet
+    the default fusion training generator for mid fusion ICNet
 
     :param df: the dataframe. provided by the csv
     :param crop_shape: cropped size of the image.

@@ -3,8 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0f2ac002-8e16-4061-9255-f22003626f8d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model.png" beforeDir="false" afterPath="$PROJECT_DIR$/model.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/icnet_fusion.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/icnet_fusion.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/ICNet/cross_fusion/2019-03-18-03-35-50/events.out.tfevents.1552880174.neil-ML" beforeDir="false" afterPath="$PROJECT_DIR$/logs/ICNet/cross_fusion/2019-03-18-03-35-50/events.out.tfevents.1552880174.neil-ML" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_fusion.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_fusion.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_fusion.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_fusion.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,22 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/models/icnet_fusion.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2079">
-              <caret line="979" selection-start-line="979" selection-end-line="979" />
-              <folding>
-                <element signature="e#187#222#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train_fusion.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="338">
+              <caret line="40" column="44" selection-start-line="40" selection-start-column="44" selection-end-line="40" selection-end-column="44" />
               <folding>
                 <element signature="e#19#52#0" expanded="true" />
               </folding>
@@ -37,14 +29,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test_fusion.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="37" column="17" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="17" />
+            <state relative-caret-position="225">
+              <caret line="84" column="14" lean-forward="true" selection-start-line="84" selection-start-column="14" selection-end-line="84" selection-end-column="14" />
               <folding>
                 <element signature="e#19#34#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="232">
+              <caret line="224" column="19" lean-forward="true" selection-start-line="224" selection-start-column="19" selection-end-line="224" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -66,6 +67,7 @@
       <find>conv5_3</find>
       <find>conv5_3_pool1</find>
       <find>conv3_1_sub4</find>
+      <find>conv3_2_1x1_reduce</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -92,10 +94,10 @@
         <option value="$PROJECT_DIR$/monodepth/utils/evaluation_utils.py" />
         <option value="$PROJECT_DIR$/monodepth/monodepth_runner.py" />
         <option value="$PROJECT_DIR$/monodepth/monodepth_simple.py" />
+        <option value="$PROJECT_DIR$/models/icnet_fusion.py" />
+        <option value="$PROJECT_DIR$/train_fusion.py" />
         <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/test_fusion.py" />
-        <option value="$PROJECT_DIR$/train_fusion.py" />
-        <option value="$PROJECT_DIR$/models/icnet_fusion.py" />
       </list>
     </option>
   </component>
@@ -117,6 +119,11 @@
             <path>
               <item name="semantic-segmentation" type="b2602c69:ProjectViewProjectNode" />
               <item name="semantic-segmentation" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="semantic-segmentation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="semantic-segmentation" type="462c0819:PsiDirectoryNode" />
+              <item name="output" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -234,12 +241,13 @@
       <workItem from="1552440887377" duration="2860000" />
       <workItem from="1552667653088" duration="15985000" />
       <workItem from="1552785292696" duration="2569000" />
-      <workItem from="1552866045449" duration="5939000" />
+      <workItem from="1552866045449" duration="7492000" />
+      <workItem from="1552926434482" duration="4956000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="198680000" />
+    <option name="totallyTimeSpent" value="205189000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -252,8 +260,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="57" y="27" width="1543" height="873" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23780896" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24114896" />
       <window_info id="Favorites" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32972974" />
@@ -264,7 +273,7 @@
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.499666" weight="0.32972974" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49833" visible="true" weight="0.3472973" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" sideWeight="0.49833" visible="true" weight="0.3472973" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50167" side_tool="true" weight="0.47297296" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.32972974" />
@@ -272,7 +281,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info active="true" anchor="right" id="Structure" order="3" visible="true" weight="0.21910487" />
+      <window_info anchor="right" id="Structure" order="3" weight="0.21910487" />
       <window_info anchor="right" id="SciView" order="4" />
       <window_info anchor="right" id="Database" order="5" />
       <window_info anchor="right" x="0" y="0" width="335" height="673" id="Documentation" order="6" side_tool="true" weight="0.3299933" />
@@ -517,38 +526,39 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model.png" />
-    <entry file="file://$PROJECT_DIR$/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3577">
-          <caret line="352" column="28" lean-forward="true" selection-start-line="352" selection-start-column="28" selection-end-line="352" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_fusion.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="37" column="17" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="17" />
-          <folding>
-            <element signature="e#19#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_fusion.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#19#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/icnet_fusion.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2079">
           <caret line="979" selection-start-line="979" selection-end-line="979" />
           <folding>
             <element signature="e#187#222#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_fusion.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="40" column="44" selection-start-line="40" selection-start-column="44" selection-end-line="40" selection-end-column="44" />
+          <folding>
+            <element signature="e#19#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="224" column="19" lean-forward="true" selection-start-line="224" selection-start-column="19" selection-end-line="224" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_fusion.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="84" column="14" lean-forward="true" selection-start-line="84" selection-start-column="14" selection-end-line="84" selection-end-column="14" />
+          <folding>
+            <element signature="e#19#34#0" expanded="true" />
           </folding>
         </state>
       </provider>

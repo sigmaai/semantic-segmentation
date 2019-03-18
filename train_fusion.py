@@ -15,8 +15,8 @@ import configs
 # ==========
 # Parameters
 # ==========
-batch_size = 3
-epochs = 3
+batch_size = 5
+epochs = 30
 model_type = "cross_fusion"
 
 #### Train ####
@@ -44,14 +44,14 @@ if model_type == "early_fusion":
                                                  n_classes=34,
                                                  training=False)
 elif model_type == "mid_fusion" or model_type == "cross_fusion":
-    train_generator = utils.mid_fusion_generator(df=utils.load_train_data(configs.label_depth_color_path),
+    train_generator = utils.fusion_generator(df=utils.load_train_data(configs.label_depth_color_path),
                                                  batch_size=batch_size,
                                                  resize_shape=(configs.img_width, configs.img_height),
                                                  crop_shape=(configs.img_width, configs.img_height),
                                                  n_classes=34,
                                                  training=True)
 
-    val_generator = utils.mid_fusion_generator(df=utils.load_val_data(configs.val_depth_color_path), batch_size=1,
+    val_generator = utils.fusion_generator(df=utils.load_val_data(configs.val_depth_color_path), batch_size=1,
                                                resize_shape=(configs.img_width, configs.img_height),
                                                crop_shape=(configs.img_width, configs.img_height),
                                                n_classes=34,
@@ -63,8 +63,8 @@ else:
 optim = optimizers.SGD(lr=0.01, momentum=0.9)
 
 # Model
-net = ICNet(width=configs.img_width, height=configs.img_height, n_classes=34, depth=6, mode=model_type)
-            # weight_path='output/icnet_' + model_type + '_020_0.827.h5')
+net = ICNet(width=configs.img_width, height=configs.img_height, n_classes=34, depth=6, mode=model_type,
+            weight_path='output/icnet_' + model_type + '_020_0.839.h5')
 
 print(net.model.summary())
 
@@ -76,4 +76,4 @@ net.model.compile(optim, 'categorical_crossentropy', metrics=['categorical_accur
 net.model.fit_generator(generator=train_generator, steps_per_epoch=1500, epochs=epochs,
                         validation_data=val_generator, validation_steps=800,
                         callbacks=[checkpoint, tensorboard, lr_decay], shuffle=True,
-                        max_queue_size=5, use_multiprocessing=True, workers=12, initial_epoch=0)
+                        max_queue_size=5, use_multiprocessing=True, workers=12, initial_epoch=20)
