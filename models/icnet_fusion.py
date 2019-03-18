@@ -192,8 +192,7 @@ class ICNet:
 
         z_color, z_depth = self.build_fusion_one_half(x_color, x_depth)
 
-        y_color = self.build_one_quarter(z_color)
-        y_depth = self.build_one_quarter_depth(z_depth)
+        y_color, y_depth = self.build_fusion_one_quarter(z_color, z_depth)
 
         h, w = y_color.shape[1:3].as_list()
         pool1 = AveragePooling2D(pool_size=(h, w), strides=(h, w), name='conv5_3_pool1')(y_color)
@@ -667,6 +666,318 @@ class ICNet:
 
         return y
 
+    # ==================================================================================================================
+
+    @staticmethod
+    def build_fusion_one_quarter(z, z_d):
+
+        # (1/4)
+        # color
+        y_ = Lambda(lambda x: tf.image.resize_bilinear(x, size=(int(x.shape[1]) // 2, int(x.shape[2]) // 2)),
+                    name='conv3_1_sub4_color')(z)
+        y = Conv2D(64, 1, activation='relu', name='conv3_2_1x1_reduce_color')(y_)
+        y = BatchNormalization(name='conv3_2_1x1_reduce_bn_color')(y)
+        y = ZeroPadding2D(name='padding5_color')(y)
+        y = Conv2D(64, 3, activation='relu', name='conv3_2_3x3_color')(y)
+        y = BatchNormalization(name='conv3_2_3x3_bn_color')(y)
+        y = Conv2D(256, 1, name='conv3_2_1x1_increase_color')(y)
+        y = BatchNormalization(name='conv3_2_1x1_increase_bn_color')(y)
+        y = Add(name='conv3_2_color')([y, y_])
+        y_ = Activation('relu', name='conv3_2/relu_color')(y)
+
+        # depth
+        y_d_ = Lambda(lambda x: tf.image.resize_bilinear(x, size=(int(x.shape[1]) // 2, int(x.shape[2]) // 2)),
+                    name='conv3_1_sub4_depth')(z_d)
+        y_d = Conv2D(64, 1, activation='relu', name='conv3_2_1x1_reduce')(y_d_)
+        y_d = BatchNormalization(name='conv3_2_1x1_reduce_bn')(y_d)
+        y_d = ZeroPadding2D(name='padding5')(y_d)
+        y_d = Conv2D(64, 3, activation='relu', name='conv3_2_3x3')(y_d)
+        y_d = BatchNormalization(name='conv3_2_3x3_bn')(y_d)
+        y_d = Conv2D(256, 1, name='conv3_2_1x1_increase')(y_d)
+        y_d = BatchNormalization(name='conv3_2_1x1_increase_bn')(y_d)
+        y_d = Add(name='conv3_2_depth')([y_d, y_d_])
+        y_d_ = Activation('relu', name='conv3_2/relu_depth')(y_d)
+
+        # part 1 color
+        y = Conv2D(64, 1, activation='relu', name='conv3_3_1x1_reduce')(y_)
+        y = BatchNormalization(name='conv3_3_1x1_reduce_bn')(y)
+        y = ZeroPadding2D(name='padding6')(y)
+        y = Conv2D(64, 3, activation='relu', name='conv3_3_3x3')(y)
+        y = BatchNormalization(name='conv3_3_3x3_bn')(y)
+        y = Conv2D(256, 1, name='conv3_3_1x1_increase')(y)
+        y = BatchNormalization(name='conv3_3_1x1_increase_bn')(y)
+
+        # part 1 depth
+        y_d = Conv2D(64, 1, activation='relu', name='dconv3_3_1x1_reduce')(y_d_)
+        y_d = BatchNormalization(name='dconv3_3_1x1_reduce_bn')(y_d)
+        y_d = ZeroPadding2D(name='dpadding6')(y_d)
+        y_d = Conv2D(64, 3, activation='relu', name='dconv3_3_3x3')(y_d)
+        y_d = BatchNormalization(name='dconv3_3_3x3_bn')(y_d)
+        y_d = Conv2D(256, 1, name='dconv3_3_1x1_increase')(y_d)
+        y_d = BatchNormalization(name='dconv3_3_1x1_increase_bn')(y_d)
+
+        # merging
+        conv3_3_color = Add(name='conv3_3_color')([y, y_])
+        conv3_3_depth = Add(name='conv3_3_depth')([y_d, y_d_])
+
+        y = Add(name="conv3_3_merge_color")([conv3_3_color, conv3_3_depth])
+        y_d = Add(name="conv3_3_merge_depth")([conv3_3_depth, conv3_3_color])
+
+        y_ = Activation('relu', name='conv3_3/relu_color')(y)
+        y_d_ = Activation('relu', name='conv3_3/relu_depth')(y_d)
+
+        # -----------------------------------------------------------------
+        # part 2 color
+        y = Conv2D(64, 1, activation='relu', name='conv3_4_1x1_reduce')(y_)
+        y = BatchNormalization(name='conv3_4_1x1_reduce_bn')(y)
+        y = ZeroPadding2D(name='padding7')(y)
+        y = Conv2D(64, 3, activation='relu', name='conv3_4_3x3')(y)
+        y = BatchNormalization(name='conv3_4_3x3_bn')(y)
+        y = Conv2D(256, 1, name='conv3_4_1x1_increase')(y)
+        y = BatchNormalization(name='conv3_4_1x1_increase_bn')(y)
+        y = Add(name='conv3_4_color')([y, y_])
+        y_ = Activation('relu', name='conv3_4/relu_color')(y)
+
+        y_d = Conv2D(64, 1, activation='relu', name='dconv3_4_1x1_reduce')(y_d_)
+        y_d = BatchNormalization(name='dconv3_4_1x1_reduce_bn')(y_d)
+        y_d = ZeroPadding2D(name='dpadding7')(y_d)
+        y_d = Conv2D(64, 3, activation='relu', name='dconv3_4_3x3')(y_d)
+        y_d = BatchNormalization(name='dconv3_4_3x3_bn')(y_d)
+        y_d = Conv2D(256, 1, name='dconv3_4_1x1_increase')(y_d)
+        y_d = BatchNormalization(name='dconv3_4_1x1_increase_bn')(y_d)
+        y_d = Add(name='conv3_4_depth')([y_d, y_d_])
+        y_d_ = Activation('relu', name='conv3_4/relu_depth')(y_d)
+
+        # -----------------------------------------------------------------
+        # part 3 color
+        y = Conv2D(512, 1, name='conv4_1_1x1_proj')(y_)
+        y = BatchNormalization(name='conv4_1_1x1_proj_bn')(y)
+        y_ = Conv2D(128, 1, activation='relu', name='conv4_1_1x1_reduce')(y_)
+        y_ = BatchNormalization(name='conv4_1_1x1_reduce_bn')(y_)
+        y_ = ZeroPadding2D(padding=2, name='padding8')(y_)
+        y_ = Conv2D(128, 3, dilation_rate=2, activation='relu', name='conv4_1_3x3')(y_)
+        y_ = BatchNormalization(name='conv4_1_3x3_bn')(y_)
+        y_ = Conv2D(512, 1, name='conv4_1_1x1_increase')(y_)
+        y_ = BatchNormalization(name='conv4_1_1x1_increase_bn')(y_)
+
+        # part 3 depth
+        y_d = Conv2D(512, 1, name='dconv4_1_1x1_proj')(y_d_)
+        y_d = BatchNormalization(name='dconv4_1_1x1_proj_bn')(y_d)
+        y_d_ = Conv2D(128, 1, activation='relu', name='dconv4_1_1x1_reduce')(y_d_)
+        y_d_ = BatchNormalization(name='dconv4_1_1x1_reduce_bn')(y_d_)
+        y_d_ = ZeroPadding2D(padding=2, name='dpadding8')(y_d_)
+        y_d_ = Conv2D(128, 3, dilation_rate=2, activation='relu', name='dconv4_1_3x3')(y_d_)
+        y_d_ = BatchNormalization(name='dconv4_1_3x3_bn')(y_d_)
+        y_d_ = Conv2D(512, 1, name='dconv4_1_1x1_increase')(y_d_)
+        y_d_ = BatchNormalization(name='dconv4_1_1x1_increase_bn')(y_d_)
+
+        conv4_1_color = Add(name='conv4_1_color')([y_d, y_d_])
+        conv4_1_depth = Add(name='conv4_1_depth')([y, y_])
+
+        y = Add(name="conv4_1_merge_color")([conv4_1_color, conv4_1_depth])
+        y_d = Add(name="conv4_1_merge_depth")([conv4_1_depth, conv4_1_color])
+
+        y_ = Activation('relu', name='conv4_1/relu_color')(y)
+        y_d_ = Activation('relu', name='conv4_1/relu_depth')(y_d)
+
+        # -----------------------------------------------------------------
+        # part 4 color
+        y = Conv2D(128, 1, activation='relu', name='conv4_2_1x1_reduce')(y_)
+        y = BatchNormalization(name='conv4_2_1x1_reduce_bn')(y)
+        y = ZeroPadding2D(padding=2, name='padding9')(y)
+        y = Conv2D(128, 3, dilation_rate=2, activation='relu', name='conv4_2_3x3')(y)
+        y = BatchNormalization(name='conv4_2_3x3_bn')(y)
+        y = Conv2D(512, 1, name='conv4_2_1x1_increase')(y)
+        y = BatchNormalization(name='conv4_2_1x1_increase_bn')(y)
+        conv4_2_color = Add(name='conv4_2_color')([y, y_])
+        y_ = Activation('relu', name='conv4_2/relu_color')(conv4_2_color)
+
+        # part 4 depth
+        y_d = Conv2D(128, 1, activation='relu', name='dconv4_2_1x1_reduce')(y_d_)
+        y_d = BatchNormalization(name='dconv4_2_1x1_reduce_bn')(y_d)
+        y_d = ZeroPadding2D(padding=2, name='dpadding9')(y_d)
+        y_d = Conv2D(128, 3, dilation_rate=2, activation='relu', name='dconv4_2_3x3')(y_d)
+        y_d = BatchNormalization(name='dconv4_2_3x3_bn')(y_d)
+        y_d = Conv2D(512, 1, name='dconv4_2_1x1_increase')(y_d)
+        y_d = BatchNormalization(name='dconv4_2_1x1_increase_bn')(y_d)
+        conv4_2_depth = Add(name='dconv4_2_depth')([y_d, y_d_])
+        y_d_ = Activation('relu', name='dconv4_2/relu_depth')(conv4_2_depth)
+
+        # -----------------------------------------------------------------
+        # part 5 color
+        y = Conv2D(128, 1, activation='relu', name='conv4_3_1x1_reduce')(y_)
+        y = BatchNormalization(name='conv4_3_1x1_reduce_bn')(y)
+        y = ZeroPadding2D(padding=2, name='padding10')(y)
+        y = Conv2D(128, 3, dilation_rate=2, activation='relu', name='conv4_3_3x3')(y)
+        y = BatchNormalization(name='conv4_3_3x3_bn')(y)
+        y = Conv2D(512, 1, name='conv4_3_1x1_increase')(y)
+        y = BatchNormalization(name='conv4_3_1x1_increase_bn')(y)
+
+        y_d = Conv2D(128, 1, activation='relu', name='dconv4_3_1x1_reduce')(y_d_)
+        y_d = BatchNormalization(name='dconv4_3_1x1_reduce_bn')(y_d)
+        y_d = ZeroPadding2D(padding=2, name='dpadding10')(y_d)
+        y_d = Conv2D(128, 3, dilation_rate=2, activation='relu', name='dconv4_3_3x3')(y_d)
+        y_d = BatchNormalization(name='dconv4_3_3x3_bn')(y_d)
+        y_d = Conv2D(512, 1, name='dconv4_3_1x1_increase')(y_d)
+        y_d = BatchNormalization(name='dconv4_3_1x1_increase_bn')(y_d)
+
+        conv4_3_color = Add(name='conv4_3_color')([y, y_])
+        conv4_3_depth = Add(name='conv4_3_depth')([y_d, y_d_])
+
+        y = Add(name="conv4_3_merge_color")([conv4_3_color, conv4_3_depth])
+        y_d = Add(name="conv4_3_merge_depth")([conv4_3_depth, conv4_3_color])
+
+        y_ = Activation('relu', name='conv4_3/relu_color')(y)
+        y_d_ = Activation('relu', name='conv4_3/relu_depth')(y_d)
+
+        # -----------------------------------------------------------------
+        # part 6 color
+        y = Conv2D(128, 1, activation='relu', name='conv4_4_1x1_reduce')(y_)
+        y = BatchNormalization(name='conv4_4_1x1_reduce_bn')(y)
+        y = ZeroPadding2D(padding=2, name='padding11')(y)
+        y = Conv2D(128, 3, dilation_rate=2, activation='relu', name='conv4_4_3x3')(y)
+        y = BatchNormalization(name='conv4_4_3x3_bn')(y)
+        y = Conv2D(512, 1, name='conv4_4_1x1_increase')(y)
+        y = BatchNormalization(name='conv4_4_1x1_increase_bn')(y)
+        y = Add(name='conv4_4_color')([y, y_])
+        y_ = Activation('relu', name='conv4_4/relu_color')(y)
+
+        y_d = Conv2D(128, 1, activation='relu', name='dconv4_4_1x1_reduce')(y_d_)
+        y_d = BatchNormalization(name='dconv4_4_1x1_reduce_bn')(y_d)
+        y_d = ZeroPadding2D(padding=2, name='dpadding11')(y_d)
+        y_d = Conv2D(128, 3, dilation_rate=2, activation='relu', name='dconv4_4_3x3')(y_d)
+        y_d = BatchNormalization(name='dconv4_4_3x3_bn')(y_d)
+        y_d = Conv2D(512, 1, name='dconv4_4_1x1_increase')(y_d)
+        y_d = BatchNormalization(name='dconv4_4_1x1_increase_bn')(y_d)
+        y_d = Add(name='conv4_4_depth')([y_d, y_d_])
+        y_d_ = Activation('relu', name='conv4_4/relu_depth')(y_d)
+
+        # -----------------------------------------------------------------
+        # part 7 color
+        y = Conv2D(128, 1, activation='relu', name='conv4_5_1x1_reduce')(y_)
+        y = BatchNormalization(name='conv4_5_1x1_reduce_bn')(y)
+        y = ZeroPadding2D(padding=2, name='padding12')(y)
+        y = Conv2D(128, 3, dilation_rate=2, activation='relu', name='conv4_5_3x3')(y)
+        y = BatchNormalization(name='conv4_5_3x3_bn')(y)
+        y = Conv2D(512, 1, name='conv4_5_1x1_increase')(y)
+        y = BatchNormalization(name='conv4_5_1x1_increase_bn')(y)
+
+        y_d = Conv2D(128, 1, activation='relu', name='dconv4_5_1x1_reduce')(y_d_)
+        y_d = BatchNormalization(name='dconv4_5_1x1_reduce_bn')(y_d)
+        y_d = ZeroPadding2D(padding=2, name='dpadding12')(y_d)
+        y_d = Conv2D(128, 3, dilation_rate=2, activation='relu', name='dconv4_5_3x3')(y_d)
+        y_d = BatchNormalization(name='dconv4_5_3x3_bn')(y_d)
+        y_d = Conv2D(512, 1, name='dconv4_5_1x1_increase')(y_d)
+        y_d = BatchNormalization(name='dconv4_5_1x1_increase_bn')(y_d)
+
+        conv4_5_color = Add(name='conv4_5_color')([y, y_])
+        conv4_5_depth = Add(name='conv4_5_depth')([y_d, y_d_])
+
+        y = Add(name="conv4_5_merge_color")([conv4_5_color, conv4_5_depth])
+        y_d = Add(name="conv4_5_merge_depth")([conv4_5_depth, conv4_5_color])
+
+        y_ = Activation('relu', name='conv4_5/relu_color')(y)
+        y_d_ = Activation('relu', name='conv4_5/relu_depth')(y_d)
+
+        # ------------------------------------------------------------------
+        # part 8 color
+        y = Conv2D(128, 1, activation='relu', name='conv4_6_1x1_reduce')(y_)
+        y = BatchNormalization(name='conv4_6_1x1_reduce_bn')(y)
+        y = ZeroPadding2D(padding=2, name='padding13')(y)
+        y = Conv2D(128, 3, dilation_rate=2, activation='relu', name='conv4_6_3x3')(y)
+        y = BatchNormalization(name='conv4_6_3x3_bn')(y)
+        y = Conv2D(512, 1, name='conv4_6_1x1_increase')(y)
+        y = BatchNormalization(name='conv4_6_1x1_increase_bn')(y)
+        y = Add(name='conv4_6_color')([y, y_])
+        y = Activation('relu', name='conv4_6/relu_color')(y)
+
+        y_d = Conv2D(128, 1, activation='relu', name='dconv4_6_1x1_reduce')(y_d_)
+        y_d = BatchNormalization(name='dconv4_6_1x1_reduce_bn')(y_d)
+        y_d = ZeroPadding2D(padding=2, name='dpadding13')(y_d)
+        y_d = Conv2D(128, 3, dilation_rate=2, activation='relu', name='dconv4_6_3x3')(y_d)
+        y_d = BatchNormalization(name='dconv4_6_3x3_bn')(y_d)
+        y_d = Conv2D(512, 1, name='dconv4_6_1x1_increase')(y_d)
+        y_d = BatchNormalization(name='dconv4_6_1x1_increase_bn')(y_d)
+        y_d = Add(name='dconv4_6_depth')([y_d, y_d_])
+        y_d = Activation('relu', name='dconv4_6/relu_depth')(y_d)
+
+        # -------------------------------------------------------------------
+        # part 9 color
+        y_ = Conv2D(1024, 1, name='conv5_1_1x1_proj')(y)
+        y_ = BatchNormalization(name='conv5_1_1x1_proj_bn')(y_)
+        y = Conv2D(256, 1, activation='relu', name='conv5_1_1x1_reduce')(y)
+        y = BatchNormalization(name='conv5_1_1x1_reduce_bn')(y)
+        y = ZeroPadding2D(padding=4, name='padding14')(y)
+        y = Conv2D(256, 3, dilation_rate=4, activation='relu', name='conv5_1_3x3')(y)
+        y = BatchNormalization(name='conv5_1_3x3_bn')(y)
+        y = Conv2D(1024, 1, name='conv5_1_1x1_increase')(y)
+        y = BatchNormalization(name='conv5_1_1x1_increase_bn')(y)
+
+        y_d_ = Conv2D(1024, 1, name='dconv5_1_1x1_proj')(y_d)
+        y_d_ = BatchNormalization(name='dconv5_1_1x1_proj_bn')(y_d_)
+        y_d = Conv2D(256, 1, activation='relu', name='dconv5_1_1x1_reduce')(y_d)
+        y_d = BatchNormalization(name='dconv5_1_1x1_reduce_bn')(y_d)
+        y_d = ZeroPadding2D(padding=4, name='dpadding14')(y_d)
+        y_d = Conv2D(256, 3, dilation_rate=4, activation='relu', name='dconv5_1_3x3')(y_d)
+        y_d = BatchNormalization(name='dconv5_1_3x3_bn')(y_d)
+        y_d = Conv2D(1024, 1, name='dconv5_1_1x1_increase')(y_d)
+        y_d = BatchNormalization(name='dconv5_1_1x1_increase_bn')(y_d)
+
+        conv5_1_color = Add(name='conv5_1_color')([y, y_])
+        conv5_1_depth = Add(name='conv5_1_depth')([y_d, y_d_])
+
+        y = Add(name="conv5_1_merge_color")([conv5_1_color, conv5_1_depth])
+        y_d = Add(name="conv5_1_merge_depth")([conv5_1_depth, conv5_1_color])
+
+        y_ = Activation('relu', name='conv5_1/relu_color')(y)
+        y_d_ = Activation('relu', name='conv5_1/relu_depth')(y_d)
+
+        # -------------------------------------------------------------------
+        # part 10 color
+        y = Conv2D(256, 1, activation='relu', name='conv5_2_1x1_reduce')(y_)
+        y = BatchNormalization(name='conv5_2_1x1_reduce_bn')(y)
+        y = ZeroPadding2D(padding=4, name='padding15')(y)
+        y = Conv2D(256, 3, dilation_rate=4, activation='relu', name='conv5_2_3x3')(y)
+        y = BatchNormalization(name='conv5_2_3x3_bn')(y)
+        y = Conv2D(1024, 1, name='conv5_2_1x1_increase')(y)
+        y = BatchNormalization(name='conv5_2_1x1_increase_bn')(y)
+        y = Add(name='conv5_2_color')([y, y_])
+        y_ = Activation('relu', name='conv5_2/relu_color')(y)
+
+        y_d = Conv2D(256, 1, activation='relu', name='dconv5_2_1x1_reduce')(y_d_)
+        y_d = BatchNormalization(name='dconv5_2_1x1_reduce_bn')(y_d)
+        y_d = ZeroPadding2D(padding=4, name='dpadding15')(y_d)
+        y_d = Conv2D(256, 3, dilation_rate=4, activation='relu', name='dconv5_2_3x3')(y_d)
+        y_d = BatchNormalization(name='dconv5_2_3x3_bn')(y_d)
+        y_d = Conv2D(1024, 1, name='dconv5_2_1x1_increase')(y_d)
+        y_d = BatchNormalization(name='dconv5_2_1x1_increase_bn')(y_d)
+        y_d = Add(name='conv5_2_depth')([y_d, y_d_])
+        y_d_ = Activation('relu', name='conv5_2/relu_depth')(y_d)
+
+        # --------------------------------------------------------------------
+        # part 11 color
+        y = Conv2D(256, 1, activation='relu', name='conv5_3_1x1_reduce')(y_)
+        y = BatchNormalization(name='conv5_3_1x1_reduce_bn')(y)
+        y = ZeroPadding2D(padding=4, name='padding16')(y)
+        y = Conv2D(256, 3, dilation_rate=4, activation='relu', name='conv5_3_3x3')(y)
+        y = BatchNormalization(name='conv5_3_3x3_bn')(y)
+        y = Conv2D(1024, 1, name='conv5_3_1x1_increase')(y)
+        y = BatchNormalization(name='conv5_3_1x1_increase_bn')(y)
+        y = Add(name='conv5_3_color')([y, y_])
+        y = Activation('relu', name='conv5_3/relu_color')(y)
+
+        y_d = Conv2D(256, 1, activation='relu', name='dconv5_3_1x1_reduce')(y_d_)
+        y_d = BatchNormalization(name='dconv5_3_1x1_reduce_bn')(y_d)
+        y_d = ZeroPadding2D(padding=4, name='dpadding16')(y_d)
+        y_d = Conv2D(256, 3, dilation_rate=4, activation='relu', name='dconv5_3_3x3')(y_d)
+        y_d = BatchNormalization(name='dconv5_3_3x3_bn')(y_d)
+        y_d = Conv2D(1024, 1, name='dconv5_3_1x1_increase')(y_d)
+        y_d = BatchNormalization(name='dconv5_3_1x1_increase_bn')(y_d)
+        y_d = Add(name='conv5_3_depth')([y_d, y_d_])
+        y_d = Activation('relu', name='conv5_3/relu_depth')(y_d)
+
+        return y, y_d
+
     @staticmethod
     def build_fusion_one_half(x_color, x_depth):
 
@@ -746,10 +1057,10 @@ class ICNet:
 
         # part 3 merging
         d_conv2_2 = Add(name='d_conv2_2')([y_d, y_d_])
-        y = Add(name='conv2_2')([y, y_])
+        conv2_2 = Add(name='conv2_2')([y, y_])
 
-        y = Add(name='conv2_2_merge_color')([y, d_conv2_2])
-        y_d_ = Add(name='conv2_2_merge_depth')([d_conv2_2, y])
+        y = Add(name='conv2_2_merge_color')([conv2_2, d_conv2_2])
+        y_d_ = Add(name='conv2_2_merge_depth')([d_conv2_2, conv2_2])
 
         y_d_ = Activation('relu', name='d_conv2_2/relu')(y_d_)
         y_ = Activation('relu', name='conv2_2/relu')(y)
@@ -774,10 +1085,10 @@ class ICNet:
         y = BatchNormalization(name='conv2_3_1x1_increase_bn')(y)
 
         d_conv2_3 = Add(name='d_conv2_3')([y_d, y_d_])
-        y = Add(name='conv2_3')([y, y_])
+        conv2_3 = Add(name='conv2_3')([y, y_])
 
-        y = Add(name='conv2_3_merge_color')([y, d_conv2_3])
-        y_d_ = Add(name='conv2_3_merge_depth')([d_conv2_3, y])
+        y = Add(name='conv2_3_merge_color')([conv2_3, d_conv2_3])
+        y_d_ = Add(name='conv2_3_merge_depth')([d_conv2_3, conv2_3])
 
         y_d_ = Activation('relu', name='d_conv2_3/relu')(y_d_)
         y_ = Activation('relu', name='conv2_3/relu')(y)
