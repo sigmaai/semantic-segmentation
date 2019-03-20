@@ -2,12 +2,9 @@
 
 import argparse
 import time
-import json
-
 import numpy as np
 import matplotlib.pyplot as plt
 from monodepth.monodepth_runner import monodepth_runner
-from keras.backend.tensorflow_backend import set_session
 import utils
 import cv2
 
@@ -19,8 +16,8 @@ import configs
 # define global variables
 model_type = 'cross_fusion'
 checkpoint_path = '/home/neil/Workspace/semantic-segmentation/monodepth/models/cityscape/model_cityscapes.data-00000-of-00001'
-model_path = 'icnet_' + model_type + '_030_0.861.h5'
-test_img_path = "./testing_imgs/10.png"
+model_path = 'icnet_' + model_type + '_030_0.869.h5'
+test_img_path = "./testing_imgs/731.png"
 
 # ==== create monodepth runner ====
 depth_runner = monodepth_runner(checkpoint_path)
@@ -91,7 +88,7 @@ def test_early_fusion():
 
     # ===== running... =====
     start_time = time.time()
-    for i in range(10):
+    for i in range():
         y = net.model.predict(x)[0]
 
     duration = time.time() - start_time
