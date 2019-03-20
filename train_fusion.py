@@ -6,6 +6,7 @@ from keras import optimizers
 from keras.callbacks import ModelCheckpoint
 from keras.callbacks import TensorBoard
 from keras.callbacks import LearningRateScheduler
+from keras.utils.vis_utils import plot_model
 
 import utils
 from utils import PolyDecay
@@ -17,6 +18,7 @@ import configs
 # ==========
 batch_size = 5
 epochs = 30
+init_epoch = 20
 model_type = "cross_fusion"
 
 #### Train ####
@@ -63,17 +65,16 @@ else:
 optim = optimizers.SGD(lr=0.01, momentum=0.9)
 
 # Model
-net = ICNet(width=configs.img_width, height=configs.img_height, n_classes=34, depth=6, mode=model_type,
-            weight_path='output/icnet_' + model_type + '_020_0.839.h5')
+net = ICNet(width=configs.img_width, height=configs.img_height, n_classes=34, depth=6, mode=model_type)
+            # weight_path='output/icnet_' + model_type + '_020_0.854.h5')
 
 print(net.model.summary())
 
-from keras.utils import plot_model
-plot_model(net.model, to_file='model.png')
+plot_model(net.model, to_file='model.png', show_shapes=True, show_layer_names=True)
 
 # Training
 net.model.compile(optim, 'categorical_crossentropy', metrics=['categorical_accuracy'])
 net.model.fit_generator(generator=train_generator, steps_per_epoch=1500, epochs=epochs,
                         validation_data=val_generator, validation_steps=800,
                         callbacks=[checkpoint, tensorboard, lr_decay], shuffle=True,
-                        max_queue_size=5, use_multiprocessing=True, workers=12, initial_epoch=20)
+                        max_queue_size=5, use_multiprocessing=True, workers=12, initial_epoch=init_epoch)

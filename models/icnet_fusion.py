@@ -182,8 +182,20 @@ class ICNet:
             model.load_weights(weights_path, by_name=True)
         return model
 
+    # ===================
+    # Cross fusion method
+    # ===================
+
     def build_cross_fusion(self, width, height, n_classes, weights_path=None):
 
+        """
+        Build cross fusion model. It's a better model than early and late fusion.
+        :param width:
+        :param height:
+        :param n_classes:
+        :param weights_path:
+        :return:
+        """
         inp_color = Input(shape=(height, width, 3), name="color_input")
         inp_depth = Input(shape=(height, width, 3), name="depth_input")
 
@@ -216,17 +228,17 @@ class ICNet:
         y_color = Add(name='conv5_3_sum')([y_color, pool1, pool2, pool3, pool6])
         y_depth = Add(name='d_conv5_3_sum')([y_depth, pool1_d, pool2_d, pool3_d, pool6_d])
         y = Add(name='conv5_cd_3_sum')([y_color, y_depth])
-
         y = Conv2D(256, 1, activation='relu', name='conv5_4_k1')(y)
         y = BatchNormalization(name='conv5_4_k1_bn')(y)
 
-        # TODO: using z_color temporarily. must address this.
         aux_1 = Lambda(lambda x: tf.image.resize_bilinear(x, size=(int(x.shape[1]) * 2, int(x.shape[2]) * 2)),
                        name='conv5_4_interp')(y)
         y = ZeroPadding2D(padding=2, name='padding17')(aux_1)
         y = Conv2D(128, 3, dilation_rate=2, name='conv_sub4')(y)
         y = BatchNormalization(name='conv_sub4_bn')(y)
-        y_ = Conv2D(128, 1, name='conv3_1_sub2_proj')(z_color)
+
+        half_merge = Add(name='half_merge')([z_color, z_depth])
+        y_ = Conv2D(128, 1, name='conv3_1_sub2_proj')(half_merge)
         y_ = BatchNormalization(name='conv3_1_sub2_proj_bn')(y_)
         y = Add(name='sub24_sum')([y, y_])
         y = Activation('relu', name='sub24_sum/relu')(y)
@@ -237,7 +249,7 @@ class ICNet:
         y_ = Conv2D(128, 3, dilation_rate=2, name='conv_sub2')(y)
         y_ = BatchNormalization(name='conv_sub2_bn')(y_)
 
-        y = self.build_one(x_color)
+        y = self.build_fusion_one(x_color, x_depth)
 
         y = Add(name='sub12_sum')([y, y_])
         y = Activation('relu', name='sub12_sum/relu')(y)
@@ -667,6 +679,33 @@ class ICNet:
         return y
 
     # ==================================================================================================================
+
+    @staticmethod
+    def build_fusion_one(x_color, x_depth):
+
+        # (1)
+        y = Conv2D(32, 3, strides=2, padding='same', activation='relu', name='conv1_sub1')(x_color)
+        y = BatchNormalization(name='conv1_sub1_bn')(y)
+        y = Conv2D(32, 3, strides=2, padding='same', activation='relu', name='conv2_sub1')(y)
+        y = BatchNormalization(name='conv2_sub1_bn')(y)
+        y = Conv2D(64, 3, strides=2, padding='same', activation='relu', name='conv3_sub1')(y)
+        y = BatchNormalization(name='conv3_sub1_bn')(y)
+        y = Conv2D(128, 1, name='conv3_sub1_proj')(y)
+        y = BatchNormalization(name='conv3_sub1_proj_bn')(y)
+
+        # (1)
+        y_d = Conv2D(32, 3, strides=2, padding='same', activation='relu', name='d_conv1_sub1')(x_depth)
+        y_d = BatchNormalization(name='d_conv1_sub1_bn')(y_d)
+        y_d = Conv2D(32, 3, strides=2, padding='same', activation='relu', name='d_conv2_sub1')(y_d)
+        y_d = BatchNormalization(name='d_conv2_sub1_bn')(y_d)
+        y_d = Conv2D(64, 3, strides=2, padding='same', activation='relu', name='d_conv3_sub1')(y_d)
+        y_d = BatchNormalization(name='d_conv3_sub1_bn')(y_d)
+        y_d = Conv2D(128, 1, name='d_conv3_sub1_proj')(y_d)
+        y_d = BatchNormalization(name='d_conv3_sub1_proj_bn')(y_d)
+
+        output = Add(name="one_merge_color")([y, y_d])
+
+        return output
 
     @staticmethod
     def build_fusion_one_quarter(z, z_d):

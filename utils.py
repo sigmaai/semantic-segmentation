@@ -103,7 +103,7 @@ labels = [
     Label(  'train'                , 31 ,       16 , 'vehicle'         , 7       , True         , False        , (  0, 80,100) ),
     Label(  'motorcycle'           , 32 ,       17 , 'vehicle'         , 7       , True         , False        , (  0,  0,230) ),
     Label(  'bicycle'              , 33 ,       18 , 'vehicle'         , 7       , True         , False        , (119, 11, 32) ),
-    Label(  'license plate'        , -1 ,       -1 , 'vehicle'         , 7       , False        , True         , (  0,  0,142) ),
+    Label(  'license plate'        , -1 ,       -1 , 'vehicle'         , 7       , False        , True         , (  0,  0,142) )
 ]
 
 
@@ -218,6 +218,10 @@ def fusion_generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=No
             X_depth[j, :, :, :] = image_depth
             Y[j] = to_categorical(cv2.resize(label, (label.shape[1] // 4, label.shape[0] // 4)), n_classes)
 
+            print(Y[j].shape)
+
+            exit(0)
+
             j += 1
             if j == batch_size:
                 break
@@ -278,6 +282,10 @@ def early_fusion_generator(df, crop_shape, n_classes=34, batch_size=1, resize_sh
 
             X[j] = np.concatenate((image, image_depth), axis=2)
             Y[j] = to_categorical(cv2.resize(label, (label.shape[1] // 4, label.shape[0] // 4)), n_classes)
+
+            print(Y[j].shape)
+
+            exit(0)
 
             j += 1
             if j == batch_size:
