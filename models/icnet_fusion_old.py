@@ -150,7 +150,6 @@ class ICNet_o:
         y = Conv2D(256, 1, activation='relu', name='conv5_4_k1')(y)
         y = BatchNormalization(name='conv5_4_k1_bn')(y)
 
-        # TODO: using z_color temporarily. must address this.
         aux_1 = Lambda(lambda x: tf.image.resize_bilinear(x, size=(int(x.shape[1]) * 2, int(x.shape[2]) * 2)),
                        name='conv5_4_interp')(y)
         y = ZeroPadding2D(padding=2, name='padding17')(aux_1)
@@ -220,7 +219,6 @@ class ICNet_o:
         y = Conv2D(256, 1, activation='relu', name='conv5_4_k1')(y)
         y = BatchNormalization(name='conv5_4_k1_bn')(y)
 
-        # TODO: using z_color temporarily. must address this.
         aux_1 = Lambda(lambda x: tf.image.resize_bilinear(x, size=(int(x.shape[1]) * 2, int(x.shape[2]) * 2)),
                        name='conv5_4_interp')(y)
         y = ZeroPadding2D(padding=2, name='padding17')(aux_1)

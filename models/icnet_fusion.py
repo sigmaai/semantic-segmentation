@@ -23,7 +23,7 @@ import tensorflow as tf
 
 class ICNet:
 
-    def __init__(self, width, height, n_classes, mode="early_fusion", weight_path=None, depth=6):
+    def __init__(self, width, height, n_classes, training, mode="early_fusion", weight_path=None, depth=6, ):
 
         '''
 
@@ -44,8 +44,8 @@ class ICNet:
             self.model = self.build_early_fusion(width=self.width, height=self.height, n_classes=self.n_classes, depth=depth)
         elif mode == "mid_fusion":
             self.model = self.build_mid_fusion(width=self.width, height=self.height, n_classes=self.n_classes)
-        elif mode == "cross_fusion":
-            self.model = self.build_cross_fusion(width=self.width, height=self.height, n_classes=self.n_classes)
+        elif "cross_fusion" in mode:
+            self.model = self.build_cross_fusion(width=self.width, height=self.height, n_classes=self.n_classes, training=training)
         else:
             raise ValueError("Can't recognize mode")
 
@@ -150,7 +150,6 @@ class ICNet:
         y = Conv2D(256, 1, activation='relu', name='conv5_4_k1')(y)
         y = BatchNormalization(name='conv5_4_k1_bn')(y)
 
-        # TODO: using z_color temporarily. must address this.
         aux_1 = Lambda(lambda x: tf.image.resize_bilinear(x, size=(int(x.shape[1]) * 2, int(x.shape[2]) * 2)),
                        name='conv5_4_interp')(y)
         y = ZeroPadding2D(padding=2, name='padding17')(aux_1)
@@ -186,7 +185,7 @@ class ICNet:
     # Cross fusion method
     # ===================
 
-    def build_cross_fusion(self, width, height, n_classes, weights_path=None):
+    def build_cross_fusion(self, width, height, n_classes, weights_path=None, training=False):
 
         """
         Build cross fusion model. It's a better model than early and late fusion.
@@ -258,7 +257,13 @@ class ICNet:
 
         out = Conv2D(n_classes, 1, activation='softmax', name='conv6_cls')(y)
 
-        model = Model(inputs=[inp_color, inp_depth], outputs=out)
+        if training:
+            aux_1 = Conv2D(n_classes, 1, activation='softmax', name='sub4_out')(aux_1)
+            aux_2 = Conv2D(n_classes, 1, activation='softmax', name='sub24_out')(aux_2)
+
+            model = Model(inputs=[inp_color, inp_depth], outputs=[out, aux_2, aux_1])
+        else:
+            model = Model(inputs=[inp_color, inp_depth], outputs=out)
 
         if weights_path is not None:
             model.load_weights(weights_path, by_name=True)

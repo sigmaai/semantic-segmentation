@@ -2,12 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f2ac002-8e16-4061-9255-f22003626f8d" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/NOTES.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/icnet_fusion_old.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/validation.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/ICNet/cross_fusion_gl/2019-03-21-01-08-40/events.out.tfevents.1553130543.neil-ML" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/ICNet/cross_fusion_gl/2019-03-21-01-13-23/events.out.tfevents.1553130829.neil-ML" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/ICNet/cross_fusion_gl/2019-03-21-01-15-37/events.out.tfevents.1553130962.neil-ML" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/ICNet/cross_fusion_gl/2019-03-21-01-21-56/events.out.tfevents.1553131342.neil-ML" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/ICNet/cross_fusion_gl/2019-03-21-01-29-40/events.out.tfevents.1553131807.neil-ML" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/validation_icnet.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/icnet_fusion.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/icnet_fusion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_fusion.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_fusion.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/icnet_fusion_old.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/icnet_fusion_old.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/train_fusion.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_fusion.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
@@ -19,11 +22,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/train_fusion.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="69" selection-start-line="69" selection-end-line="69" />
+            <state relative-caret-position="291">
+              <caret line="20" column="14" selection-start-line="20" selection-start-column="14" selection-end-line="20" selection-end-column="14" />
               <folding>
                 <element signature="e#19#52#0" expanded="true" />
               </folding>
@@ -32,22 +35,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test_fusion.py">
+        <entry file="file://$PROJECT_DIR$/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
-              <caret line="50" column="35" lean-forward="true" selection-start-line="50" selection-start-column="35" selection-end-line="50" selection-end-column="35" />
+            <state relative-caret-position="232">
+              <caret line="470" column="11" selection-start-line="470" selection-start-column="11" selection-end-line="470" selection-end-column="11" />
               <folding>
-                <element signature="e#19#34#0" expanded="true" />
+                <element signature="e#107#117#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/icnet_fusion_old.py">
+        <entry file="file://$PROJECT_DIR$/models/icnet_fusion.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+            <state relative-caret-position="462">
+              <caret line="152" selection-start-line="152" selection-end-line="152" />
               <folding>
                 <element signature="e#187#222#0" expanded="true" />
               </folding>
@@ -56,36 +59,12 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/validation.py">
+        <entry file="file://$PROJECT_DIR$/models/icnet_fusion_old.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="353">
-              <caret line="59" column="21" lean-forward="true" selection-start-line="59" selection-start-column="21" selection-end-line="59" selection-end-column="21" />
+            <state relative-caret-position="327">
+              <caret line="221" selection-start-line="221" selection-end-line="221" />
               <folding>
-                <element signature="e#19#34#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/NOTES.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="45">
-                <caret line="3" column="137" selection-start-line="3" selection-start-column="137" selection-end-line="3" selection-end-column="137" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="77" column="31" selection-start-line="77" selection-start-column="31" selection-end-line="77" selection-end-column="31" />
-              <folding>
-                <element signature="e#107#117#0" expanded="true" />
+                <element signature="e#187#222#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -136,13 +115,14 @@
         <option value="$PROJECT_DIR$/monodepth/utils/evaluation_utils.py" />
         <option value="$PROJECT_DIR$/monodepth/monodepth_runner.py" />
         <option value="$PROJECT_DIR$/monodepth/monodepth_simple.py" />
-        <option value="$PROJECT_DIR$/models/icnet_fusion.py" />
-        <option value="$PROJECT_DIR$/train_fusion.py" />
-        <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/test_fusion.py" />
-        <option value="$PROJECT_DIR$/models/icnet_fusion_old.py" />
         <option value="$PROJECT_DIR$/validation.py" />
         <option value="$PROJECT_DIR$/NOTES.md" />
+        <option value="$PROJECT_DIR$/validation_icnet.py" />
+        <option value="$PROJECT_DIR$/utils.py" />
+        <option value="$PROJECT_DIR$/models/icnet_fusion.py" />
+        <option value="$PROJECT_DIR$/models/icnet_fusion_old.py" />
+        <option value="$PROJECT_DIR$/train_fusion.py" />
       </list>
     </option>
   </component>
@@ -293,12 +273,12 @@
       <workItem from="1552926434482" duration="5029000" />
       <workItem from="1552940510815" duration="14688000" />
       <workItem from="1553045121064" duration="638000" />
-      <workItem from="1553090640274" duration="8237000" />
+      <workItem from="1553090640274" duration="14329000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="228825000" />
+    <option name="totallyTimeSpent" value="234917000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -313,7 +293,7 @@
     <frame x="57" y="27" width="1543" height="873" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18169673" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19238476" />
       <window_info id="Favorites" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32972974" />
@@ -372,7 +352,6 @@
     </ignored-roots>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///usr/local/lib/python2.7/dist-packages/keras/utils/data_utils.py" />
     <entry file="file:///usr/local/lib/python2.7/dist-packages/keras/callbacks.py" />
     <entry file="file://$PROJECT_DIR$/media/image-1.png">
       <provider selected="true" editor-type-id="images" />
@@ -445,16 +424,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/icnet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="69" column="29" selection-start-line="69" selection-start-column="29" selection-end-line="69" selection-end-column="29" />
-          <folding>
-            <element signature="e#187#222#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -566,16 +535,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model.png" />
-    <entry file="file://$PROJECT_DIR$/models/icnet_fusion.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-188">
-          <caret line="251" column="44" selection-start-line="251" selection-start-column="44" selection-end-line="251" selection-end-column="44" />
-          <folding>
-            <element signature="e#187#222#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/testing_imgs/test_3.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -586,63 +545,93 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="77" column="31" selection-start-line="77" selection-start-column="31" selection-end-line="77" selection-end-column="31" />
-          <folding>
-            <element signature="e#107#117#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_fusion.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="50" column="35" lean-forward="true" selection-start-line="50" selection-start-column="35" selection-end-line="50" selection-end-column="35" />
-          <folding>
-            <element signature="e#19#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/icnet_fusion_old.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-          <folding>
-            <element signature="e#187#222#0" expanded="true" />
-          </folding>
+    <entry file="file://$PROJECT_DIR$/NOTES.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="150">
+            <caret line="10" column="64" selection-start-line="10" selection-start-column="64" selection-end-line="10" selection-end-column="64" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/validation.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="353">
-          <caret line="59" column="21" lean-forward="true" selection-start-line="59" selection-start-column="21" selection-end-line="59" selection-end-column="21" />
+          <caret line="59" column="21" selection-start-line="59" selection-start-column="21" selection-end-line="59" selection-end-column="21" />
           <folding>
             <element signature="e#19#34#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_fusion.py">
+    <entry file="file://$PROJECT_DIR$/test_fusion.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="69" selection-start-line="69" selection-end-line="69" />
+        <state relative-caret-position="600">
+          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
           <folding>
-            <element signature="e#19#52#0" expanded="true" />
+            <element signature="e#19#34#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NOTES.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="45">
-            <caret line="3" column="137" selection-start-line="3" selection-start-column="137" selection-end-line="3" selection-end-column="137" />
-          </first_editor>
-          <second_editor />
+    <entry file="file://$PROJECT_DIR$/models/icnet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="69" column="29" selection-start-line="69" selection-start-column="29" selection-end-line="69" selection-end-column="29" />
+          <folding>
+            <element signature="e#187#222#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/validation_icnet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="16" column="24" lean-forward="true" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
+          <folding>
+            <element signature="e#19#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="470" column="11" selection-start-line="470" selection-start-column="11" selection-end-line="470" selection-end-column="11" />
+          <folding>
+            <element signature="e#107#117#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/icnet_fusion.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="152" selection-start-line="152" selection-end-line="152" />
+          <folding>
+            <element signature="e#187#222#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/icnet_fusion_old.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="221" selection-start-line="221" selection-end-line="221" />
+          <folding>
+            <element signature="e#187#222#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_fusion.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="20" column="14" selection-start-line="20" selection-start-column="14" selection-end-line="20" selection-end-column="14" />
+          <folding>
+            <element signature="e#19#52#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

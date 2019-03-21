@@ -147,7 +147,7 @@ def convert_class_to_rgb(image_labels, threshold=0.80):
 # The new training generator
 
 
-def fusion_generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=None, horizontal_flip=True,
+def fusion_generator(df, resize_shape, n_classes=34, batch_size=1, horizontal_flip=True,
                          vertical_flip=False, brightness=0.1, rotation=5.0, zoom=0.1, training=True):
 
     """
@@ -157,7 +157,6 @@ def fusion_generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=No
     :param crop_shape: cropped size of the image.
     :param n_classes: number of classes to classify
     :param batch_size: the training batch size. usually default to 5
-    :param resize_shape:
     :param horizontal_flip: boolean, apply hori flip to image during training.
     :param vertical_flip: boolean, apply vert flip to image during training
     :param brightness:
@@ -167,9 +166,12 @@ def fusion_generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=No
     :return:
     """
 
-    X_color = np.zeros((batch_size, crop_shape[1], crop_shape[0], 3), dtype='float32')
-    X_depth = np.zeros((batch_size, crop_shape[1], crop_shape[0], 3), dtype='float32')
-    Y = np.zeros((batch_size, crop_shape[1] // 4, crop_shape[0] // 4, n_classes), dtype='float32')
+    X_color = np.zeros((batch_size, resize_shape[1], resize_shape[0], 3), dtype='float32')
+    X_depth = np.zeros((batch_size, resize_shape[1], resize_shape[0], 3), dtype='float32')
+
+    Y1 = np.zeros((batch_size, resize_shape[1] // 4, resize_shape[0] // 4, n_classes), dtype='float32')
+    Y2 = np.zeros((batch_size, resize_shape[1] // 8, resize_shape[0] // 8, n_classes), dtype='float32')
+    Y3 = np.zeros((batch_size, resize_shape[1] // 16, resize_shape[0] // 16, n_classes), dtype='float32')
 
     while 1:
         j = 0
@@ -178,10 +180,9 @@ def fusion_generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=No
 
             image, image_depth, label = _load_rgb_depth_image_label(df[index])
 
-            if resize_shape:
-                image = cv2.resize(image, resize_shape)
-                image_depth = cv2.resize(image_depth, resize_shape)
-                label = cv2.resize(label, resize_shape)
+            image = cv2.resize(image, resize_shape)
+            image_depth = cv2.resize(image_depth, resize_shape)
+            label = cv2.resize(label, resize_shape)
 
             # Do augmentation (only if training)
             if training:
@@ -216,17 +217,16 @@ def fusion_generator(df, crop_shape, n_classes=34, batch_size=1, resize_shape=No
 
             X_color[j, :, :, :] = image
             X_depth[j, :, :, :] = image_depth
-            Y[j] = to_categorical(cv2.resize(label, (label.shape[1] // 4, label.shape[0] // 4)), n_classes)
 
-            print(Y[j].shape)
-
-            exit(0)
+            Y1[j] = to_categorical(cv2.resize(label, (label.shape[1] // 4, label.shape[0] // 4)), n_classes)
+            Y2[j] = to_categorical(cv2.resize(label, (label.shape[1] // 8, label.shape[0] // 8)), n_classes)
+            Y3[j] = to_categorical(cv2.resize(label, (label.shape[1] // 16, label.shape[0] // 16)), n_classes)
 
             j += 1
             if j == batch_size:
                 break
 
-        yield [X_color, X_depth], Y
+        yield [X_color, X_depth], [Y1, Y2, Y3]
 
 
 # The new training generator
